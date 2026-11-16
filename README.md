@@ -4,7 +4,8 @@
 繁體中文 × English 對照，為自學而寫的單檔互動講義。
 
 > 線上講義：**https://jeng-linli.github.io/hypothesis-testing-notes/**
-> 20 題演練：**https://jeng-linli.github.io/hypothesis-testing-notes/exercises.html**
+> 20 題演練（第一冊）：**https://jeng-linli.github.io/hypothesis-testing-notes/exercises.html**
+> 20 題演練（第二冊 · 全章節覆蓋）：**https://jeng-linli.github.io/hypothesis-testing-notes/exercises-2.html**
 
 ---
 
@@ -13,7 +14,8 @@
 | 檔案 | 內容 |
 |:--|:--|
 | `index.html` | 主講義，19 章，逐知識點講解＋例題 |
-| `exercises.html` | **20 題演練**，由簡至難，每題詳解可折疊 |
+| `exercises.html` | **20 題演練（第一冊）**，由簡至難，每題詳解可折疊 |
+| `exercises-2.html` | **20 題演練（第二冊）**，按 §01–§19 章節順序，全覆蓋 |
 
 ## 這份講義是什麼
 

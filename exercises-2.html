@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20 題 · 第二冊 · 全章節覆蓋 — Set 2 Full Coverage</title>
+<style>
+:root{
+  --bg:#0b0f14; --panel:#121821; --panel2:#18202b; --panel3:#1e2836;
+  --line:#243040; --line2:#2e3c4f;
+  --tx:#e8eef6; --tx2:#a8b8c8; --tx3:#6f8194;
+  --blue:#5aa9ff; --blue-d:#1d3a5c;
+  --amber:#f0b542; --amber-d:#3a2d12;
+  --red:#ff6b6b; --red-d:#3d1b1b;
+  --green:#3fb950; --green-d:#16301c;
+  --purple:#b98cff; --purple-d:#2a1f3d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--tx);
+  font-family:"Inter","Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+.app{display:flex; min-height:100vh}
+
+/* sidebar */
+.sidebar{
+  width:280px; flex:0 0 280px; position:sticky; top:0; height:100vh;
+  border-right:1px solid var(--line); background:linear-gradient(180deg,#0e131a,#0b0f14);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.brand{padding:20px 20px 14px; border-bottom:1px solid var(--line)}
+.brand .k{font-size:11px; letter-spacing:.16em; color:var(--tx3); text-transform:uppercase}
+.brand h1{font-size:17px; margin:6px 0 2px; font-weight:650; letter-spacing:.02em}
+.brand .sub{font-size:12px; color:var(--tx3)}
+.back{display:block; margin-top:10px; font-size:11.5px; color:var(--blue); text-decoration:none}
+.back:hover{text-decoration:underline}
+.toggle{display:flex; gap:6px; padding:14px 20px; border-bottom:1px solid var(--line)}
+.toggle button{
+  flex:1; padding:6px 4px; font-size:12px; border-radius:7px; cursor:pointer;
+  background:var(--panel2); color:var(--tx2); border:1px solid var(--line2);
+  font-family:inherit; transition:.15s;
+}
+.toggle button:hover{color:var(--tx); border-color:#3d5a7a}
+.toggle button.on{background:var(--blue); color:#04121f; border-color:var(--blue); font-weight:650}
+nav{flex:1; overflow-y:auto; padding:10px 10px 30px}
+nav .grp{font-size:10.5px; letter-spacing:.12em; color:var(--tx3); text-transform:uppercase; padding:13px 10px 4px}
+nav a{
+  display:flex; gap:9px; align-items:baseline; padding:5px 10px; margin:1px 0;
+  color:var(--tx2); text-decoration:none; font-size:12.8px; border-radius:6px;
+  border-left:2px solid transparent; transition:.12s;
+}
+nav a .num{font-size:10.5px; color:var(--tx3); font-variant-numeric:tabular-nums; min-width:20px}
+nav a:hover{background:var(--panel2); color:var(--tx)}
+nav a.active{background:var(--blue-d); color:#cfe6ff; border-left-color:var(--blue)}
+nav a.active .num{color:var(--blue)}
+nav a .d{font-size:9px; color:var(--amber); letter-spacing:-1px; margin-left:auto}
+.navfoot{padding:10px 20px 16px; border-top:1px solid var(--line); font-size:11.5px; color:var(--tx3)}
+.pbar{height:3px; background:#1a222d; border-radius:2px; margin-top:7px; overflow:hidden}
+.pbar i{display:block; height:100%; width:0; background:linear-gradient(90deg,#5aa9ff,#b98cff); transition:width .1s}
+
+/* main */
+main{flex:1; min-width:0; padding:0 clamp(18px,4vw,56px) 120px; max-width:1080px; margin:0 auto}
+.hero{padding:56px 0 30px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.hero .eyebrow{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:12px}
+.hero h1{font-size:clamp(26px,3.6vw,40px); line-height:1.2; margin:0 0 6px; font-weight:680; letter-spacing:-.01em}
+.hero h2{font-size:clamp(15px,1.6vw,18px); font-weight:400; color:var(--tx2); margin:0 0 18px}
+.hero p{max-width:72ch; color:var(--tx2); font-size:14.5px}
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px}
+.chip{font-size:11.5px; padding:4px 10px; border:1px solid var(--line2); border-radius:20px; color:var(--tx2); background:var(--panel)}
+.toolbar{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 0}
+.toolbar button{
+  font-family:inherit; font-size:12px; padding:6px 13px; border-radius:7px; cursor:pointer;
+  background:var(--panel2); color:var(--tx2); border:1px solid var(--line2);
+}
+.toolbar button:hover{color:var(--tx); border-color:var(--blue)}
+
+section{padding:40px 0 8px; border-bottom:1px solid var(--line); position:relative}
+section:last-of-type{border:none}
+.qtop{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+.qtop .qn{
+  font-family:"JetBrains Mono",Consolas,monospace; font-size:13px; font-weight:700;
+  background:var(--blue-d); border:1px solid #2f5b87; color:#9ecbff;
+  padding:3px 10px; border-radius:6px;
+}
+.qtop .lv{font-size:11px; letter-spacing:.05em; color:var(--amber)}
+.qtop .tp{font-size:11.5px; padding:3px 9px; border:1px solid var(--line2); border-radius:5px; color:var(--tx2); background:var(--panel)}
+.qtext{background:var(--panel); border:1px solid var(--line2); border-radius:10px; padding:16px 18px 6px}
+.qtext::before{
+  content:""; display:block; width:3px; height:16px; background:var(--purple);
+  border-radius:2px; margin-bottom:8px;
+}
+
+p{margin:10px 0}
+.zh{display:block}
+.en{display:block; color:var(--tx2); font-size:14.5px; line-height:1.7}
+.en b, .en strong{color:#cfe0f0; font-weight:600}
+body.lang-zh .en{display:none}
+body.lang-en .zh{display:none}
+body.lang-en .en{color:var(--tx); font-size:15px}
+b, strong{color:#fff; font-weight:640}
+em{color:var(--amber); font-style:normal}
+code{
+  font-family:"JetBrains Mono","Cascadia Code",Consolas,monospace; font-size:.88em;
+  background:var(--panel3); padding:1px 6px; border-radius:4px; color:#a8d8ff; border:1px solid var(--line2);
+}
+a{color:var(--blue)}
+ul, ol{margin:10px 0; padding-left:22px}
+li{margin:5px 0}
+li::marker{color:var(--tx3)}
+
+.fx{
+  background:var(--panel2); border:1px solid var(--line2); border-left:3px solid var(--blue);
+  border-radius:8px; padding:13px 16px; margin:14px 0; overflow-x:auto;
+  font-family:"Cambria Math","Latin Modern Math",Cambria,"Times New Roman",serif; font-size:17px;
+}
+.fx .lbl{display:block; font-family:"Inter","Segoe UI",sans-serif; font-size:11px; letter-spacing:.12em; color:var(--tx3); text-transform:uppercase; margin-bottom:8px}
+.fx .row{display:block; margin:5px 0; white-space:nowrap}
+.fx .row.p{white-space:normal}
+.fr{display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 .3em; line-height:1.2; font-size:.94em}
+.fr .n{border-bottom:1.4px solid currentColor; padding:0 .35em .1em; display:block}
+.fr .d{padding:.1em .35em 0; display:block}
+.sm{font-size:.82em}
+
+.note, .warn, .tip, .key{
+  border:1px solid var(--line2); border-radius:9px; padding:13px 16px; margin:16px 0;
+  background:var(--panel); font-size:14.3px;
+}
+.note{border-left:3px solid var(--blue)}
+.warn{border-left:3px solid var(--red); background:linear-gradient(90deg,var(--red-d),var(--panel) 60%)}
+.tip{border-left:3px solid var(--green); background:linear-gradient(90deg,var(--green-d),var(--panel) 60%)}
+.key{border-left:3px solid var(--amber); background:linear-gradient(90deg,var(--amber-d),var(--panel) 60%)}
+.note .h, .warn .h, .tip .h, .key .h{
+  display:block; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+  font-weight:650; margin-bottom:6px; color:var(--tx3);
+}
+.warn .h{color:#ff9b9b} .tip .h{color:#6ee787} .key .h{color:var(--amber)} .note .h{color:#8cc8ff}
+
+/* solution */
+details.sol{
+  margin:16px 0 4px; border:1px solid #24522f; border-radius:10px;
+  background:linear-gradient(180deg,#101a15,#0f151d); overflow:hidden;
+}
+details.sol>summary{
+  cursor:pointer; list-style:none; padding:11px 16px; font-size:13px; font-weight:640;
+  color:#8ee89a; background:var(--green-d); border-bottom:1px solid transparent;
+  display:flex; align-items:center; gap:9px; user-select:none;
+}
+details.sol>summary::-webkit-details-marker{display:none}
+details.sol>summary::before{content:"▸"; font-size:14px; transition:transform .15s}
+details.sol[open]>summary::before{transform:rotate(90deg)}
+details.sol[open]>summary{border-bottom-color:#24522f}
+details.sol .solbody{padding:6px 16px 18px}
+.steps{list-style:none; padding:0; margin:12px 0; counter-reset:st}
+.steps>li{
+  position:relative; padding:10px 0 10px 44px; border-top:1px dashed var(--line2);
+  counter-increment:st; margin:0;
+}
+.steps>li:first-child{border-top:none}
+.steps>li::before{
+  content:counter(st); position:absolute; left:0; top:11px;
+  width:26px; height:26px; border-radius:7px; background:var(--blue-d); border:1px solid #2f5b87;
+  color:#9ecbff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  font-variant-numeric:tabular-nums;
+}
+.steps>li>.lab{font-size:12px; color:var(--tx3); letter-spacing:.05em; display:block; margin-bottom:2px}
+.ans{
+  margin-top:14px; padding:12px 14px; border-radius:8px;
+  background:var(--green-d); border:1px solid #24522f; font-size:14.2px;
+}
+.ans b{color:#8ee89a}
+.rej{color:var(--red); font-weight:700}
+.norej{color:var(--green); font-weight:700}
+
+.tw{overflow-x:auto; margin:16px 0; border:1px solid var(--line2); border-radius:9px}
+table{border-collapse:collapse; width:100%; font-size:13.4px; min-width:520px}
+th, td{padding:8px 11px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{background:var(--panel3); font-size:12px; letter-spacing:.05em; color:var(--tx2); font-weight:640; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#151d27}
+td.c, th.c{text-align:center}
+.mono{font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px}
+
+@media(max-width:820px){
+  .sidebar{position:fixed; left:-280px; z-index:50; transition:.2s}
+  .sidebar.open{left:0; box-shadow:0 0 40px #000}
+  main{max-width:100%}
+  .menubtn{display:flex !important}
+  .fx{overflow-x:auto}
+}
+.menubtn{
+  display:none; position:fixed; bottom:18px; right:18px; z-index:60;
+  width:48px; height:48px; border-radius:50%; background:var(--blue); color:#04121f;
+  border:none; font-size:20px; align-items:center; justify-content:center; cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);
+}
+hr{border:none; border-top:1px solid var(--line); margin:30px 0}
+::selection{background:#2a5c8f; color:#fff}
+::-webkit-scrollbar{width:9px; height:9px}
+::-webkit-scrollbar-track{background:#0b0f14}
+::-webkit-scrollbar-thumb{background:#2a3748; border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:#3a4b60}
+</style>
+</head>
+<body class="lang-both">
+<div class="app">
+<aside class="sidebar" id="sb">
+  <div class="brand">
+    <div class="k">UFUG2104 · Applied Statistics</div>
+    <h1>20 題 · 第二冊</h1>
+    <div class="sub">全章節覆蓋 · 雙語詳解</div>
+    <a class="back" href="exercises.html">← 回第一冊 / Set 1</a>
+    <a class="back" href="index.html">← 回雙語講義 / Notes</a>
+  </div>
+  <div class="toggle">
+    <button data-lang="both" class="on">雙語</button>
+    <button data-lang="zh">繁中</button>
+    <button data-lang="en">EN</button>
+  </div>
+  <nav id="toc">
+    <div class="grp">基礎觀念 · §01–§06</div>
+    <a href="#q1"><span class="num">Q1</span><span class="t">反證法與二項</span><span class="d">§01–02</span></a>
+    <a href="#q2"><span class="num">Q2</span><span class="t">寫假設與尾巴</span><span class="d">§03</span></a>
+    <a href="#q3"><span class="num">Q3</span><span class="t">單尾比較雙尾</span><span class="d">§04</span></a>
+    <a href="#q4"><span class="num">Q4</span><span class="t">期望誤判次數</span><span class="d">§05</span></a>
+    <a href="#q5"><span class="num">Q5</span><span class="t">挑 α 是作弊</span><span class="d">§06</span></a>
+    <div class="grp">判決方法 · §07–§09</div>
+    <a href="#q6"><span class="num">Q6</span><span class="t">臨界值法</span><span class="d">§07</span></a>
+    <a href="#q7"><span class="num">Q7</span><span class="t">P 值法對照</span><span class="d">§08</span></a>
+    <a href="#q8"><span class="num">Q8</span><span class="t">拒絕域總表</span><span class="d">§09</span></a>
+    <div class="grp">power 與樣本數 · §10–§11</div>
+    <a href="#q9"><span class="num">Q9</span><span class="t">算 β 與 power</span><span class="d">§10</span></a>
+    <a href="#q10"><span class="num">Q10</span><span class="t">往上加樣本</span><span class="d">§11</span></a>
+    <div class="grp">單一母體 · §12–§14</div>
+    <a href="#q11"><span class="num">Q11</span><span class="t">均值 σ 已知</span><span class="d">§12</span></a>
+    <a href="#q12"><span class="num">Q12</span><span class="t">均值 σ 未知</span><span class="d">§13</span></a>
+    <a href="#q13"><span class="num">Q13</span><span class="t">變異數 χ²</span><span class="d">§14</span></a>
+    <div class="grp">流程與兩母體 · §15–§17</div>
+    <a href="#q14"><span class="num">Q14</span><span class="t">十步流程排序</span><span class="d">§15</span></a>
+    <a href="#q15"><span class="num">Q15</span><span class="t">兩母體均值差</span><span class="d">§16</span></a>
+    <a href="#q16"><span class="num">Q16</span><span class="t">兩母體比例差</span><span class="d">§17</span></a>
+    <div class="grp">實戰與總複習 · §18–§19</div>
+    <a href="#q17"><span class="num">Q17</span><span class="t">A/B 樣本數</span><span class="d">§18</span></a>
+    <a href="#q18"><span class="num">Q18</span><span class="t">三種實務誤用</span><span class="d">§18</span></a>
+    <a href="#q19"><span class="num">Q19</span><span class="t">公式與臨界值</span><span class="d">§19</span></a>
+    <a href="#q20"><span class="num">Q20</span><span class="t">綜合大題</span><span class="d">§19</span></a>
+    <a href="#summary"><span class="num">✓</span><span class="t">答案一覽</span><span class="d"></span></a>
+  </nav>
+  <div class="navfoot"><span class="zh">閱讀進度</span><span class="en">Reading progress</span>
+    <div class="pbar"><i id="pfill"></i></div>
+  </div>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">UFUG2104 · Applied Statistics · Chapter 7</div>
+  <h1>第二冊：把 19 章走一遍</h1>
+  <h2>Set 2: One Full Pass Through All 19 Sections</h2>
+  <p class="zh">第一冊練「算得對」，這一冊練「全覆蓋」。每題標了對應章節（§01–§19），情境與數字全部換新；從二項分數的反證法開始，一路走到公式總表與考前檢查。 19 章一個不漏。</p>
+  <p class="en">Set 1 trained computation; this set trains complete coverage. Every problem is tagged with its source section (§01–§19), with fresh scenarios and numbers. It starts from the binomial proof-by-contradiction example and ends at the formula sheet and final checks—all nineteen sections covered.</p>
+  <div class="meta">
+    <span class="chip">20 題 / 20 problems</span>
+    <span class="chip">§01–§19 全覆蓋</span>
+    <span class="chip">繁中 × English</span>
+    <span class="chip">離線可用 / offline-ready</span>
+  </div>
+  <div class="toolbar">
+    <button id="expandAll">展開全部詳解 / Expand all</button>
+    <button id="collapseAll">收合全部 / Collapse all</button>
+  </div>
+</header>
+
+<div class="note">
+  <span class="h">和第一冊的差別 / How this differs from Set 1</span>
+  <div class="zh">第一冊按「難度」排，這一冊按「章節」排。側欄每題後面的 <code>§0x</code> 就是來源章節。讀完主講義後，用這冊逐章驗收：哪一題卡住，就回去看對應那一節。詳解一樣先折疊。</div>
+  <div class="en">Set 1 is ordered by difficulty; this one follows the lecture order. The <code>§0x</code> tag beside each item in the sidebar is its source section. After reading the notes, use this set as a section-by-section check: when one stops you, go back to that exact section. Solutions are collapsed as before.</div>
+</div>
+
+<!-- Q1 -->
+<section id="q1">
+  <div class="qtop"><span class="qn">Q1</span><span class="lv">§01–02 · 全課地圖與反證法</span><span class="tp">二項分佈</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　延續講義開場的品管情境：長期不良率標準是 <code>p = 0.05</code>，抽 <code>n = 100</code> 件。這次抽到 <b>8 件</b>不良（不是講義裡的 10 件）。<br>(a) 計算 <code>P(X ≥ 8)</code>。(b) 在 <code>α = .05</code> 下判決。(c) 若抽到 4 件，<code>P(X ≥ 4) = 0.742</code>，能不能說「製程合格」？</div>
+    <div class="en"><b>Question.</b> Continue the opening quality-control example: the long-run defect standard is <code>p = 0.05</code>, and <code>n = 100</code> items are sampled. This time <b>8 defectives</b> are found (not the 10 in the notes). (a) Compute <code>P(X ≥ 8)</code>. (b) Decide at <code>α = .05</code>. (c) If only 4 were found, with <code>P(X ≥ 4) = 0.742</code>, can we declare the process acceptable?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">什麼是假設檢定 / What a test is</span>
+        <div class="zh">反證法＋機率：先假設「製程沒問題」，再問「如果真的沒問題，抽到這麼糟的樣本有多罕見？」罕見到不合理就推翻假設。</div>
+        <div class="en">Proof by contradiction plus probability: assume "the process is fine", then ask how unlikely a sample this bad would be. If it is implausibly rare, reject the assumption.</div></li>
+      <li><span class="lab">算尾巴面積 / Compute the tail area</span>
+        <div class="zh"><code>X ~ Binomial(100, 0.05)</code>。<br><code>P(X ≥ 8) = 1 − Σ(k=0..7) C(100,k)(0.05)^k(0.95)^(100−k) = 0.1280</code>。<br>（講義的 10 件是 0.0282，6 件是 0.384，4 件是 0.742。）</div>
+        <div class="en"><code>X ~ Binomial(100, 0.05)</code>.<br><code>P(X ≥ 8) = 1 − Σ(k=0..7) C(100,k)(0.05)^k(0.95)^(100−k) = 0.1280</code>.<br>(The notes give 0.0282 for 10, 0.384 for 6, and 0.742 for 4.)</div></li>
+      <li><span class="lab">判決 / Decision</span>
+        <div class="zh"><code>0.1280 &gt; 0.05</code> → <span class="norej">不拒絕</span>。8 件不良雖然高於期望的 5 件，但這種波動並不罕見（約 1/8 的機會），不足以認定不良率超標。</div>
+        <div class="en"><code>0.1280 &gt; 0.05</code> → <span class="norej">do not reject</span>. Eight defectives exceed the expected five, but such fluctuation is not rare (about 1 in 8), so it is not enough to claim a higher defect rate.</div></li>
+      <li><span class="lab">第 (c) 問的陷阱 / The trap in (c)</span>
+        <div class="zh"><code>0.742</code> 很大，只能說「沒抓到把柄」。<b>「不拒絕」≠「證明合格」</b>——就像法庭判無罪不等於他真的沒做。這是 §02 反覆強調、也是最常考的一句話。</div>
+        <div class="en"><code>0.742</code> is large, so we simply "did not catch anything". <b>"Fail to reject" ≠ "proved acceptable"</b>—like a not-guilty verdict. This is the single most-tested sentence in §02.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) 0.1280；(b) <span class="norej">不拒絕</span>；(c) 不能，欠缺證據不等於證明合格。</span><span class="en"><b>Answer:</b> (a) 0.1280; (b) <span class="norej">do not reject</span>; (c) no—lack of evidence is not proof of acceptance.</span></div>
+  </div></details>
+</section>
+
+<!-- Q2 -->
+<section id="q2">
+  <div class="qtop"><span class="qn">Q2</span><span class="lv">§03 · 虛無與對立假設</span><span class="tp">寫 H₀/Ha</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　設 μ 為某母體平均值。把下列五句話分別寫成 <code>H₀</code> 與 <code>Ha</code>，並標出尾巴型態：<br>(a) 平均值「至少 50」；(b) 平均值「低於 50」；(c) 平均值「等於 50」；(d) 平均值「偏離 50」；(e) 平均值「不超過 50」但我們想證明它超標。</div>
+    <div class="en"><b>Question.</b> Let μ be a population mean. Write <code>H₀</code> and <code>Ha</code> for each statement and label the tail: (a) the mean is "at least 50"; (b) "below 50"; (c) "equal to 50"; (d) "different from 50"; (e) "at most 50" but we want to show it exceeds 50.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">唯一的規則 / The one rule</span>
+        <div class="zh">想證明的事 → Ha；現況或含等號的保守說法 → H₀。<b>等號永遠在 H₀</b>；Ha 決定了尾巴方向。</div>
+        <div class="en">What you want to establish → Ha; the status quo (which contains equality) → H₀. <b>Equality always sits in H₀</b>, and Ha determines the tail.</div></li>
+      <li><span class="lab">逐題 / One by one</span>
+        <div class="zh">(a) 這是現況（至少 50），若要檢驗它是否被違反：<code>H₀: μ ≥ 50</code> vs <code>Ha: μ &lt; 50</code>，左尾。<br>(b) 想證明低於：<code>H₀: μ ≥ 50</code> vs <code>Ha: μ &lt; 50</code>，左尾。<br>(c) <code>H₀: μ = 50</code> vs <code>Ha: μ ≠ 50</code>，雙尾。<br>(d) 同 (c)，「偏離」就是不等於，雙尾。<br>(e) <code>H₀: μ ≤ 50</code> vs <code>Ha: μ &gt; 50</code>，右尾（此處要證明的是超標，不是原說法本身）。</div>
+        <div class="en">(a) This is the status quo; to test whether it is violated: <code>H₀: μ ≥ 50</code> vs <code>Ha: μ &lt; 50</code>, lower tail.<br>(b) Want to show below: <code>H₀: μ ≥ 50</code> vs <code>Ha: μ &lt; 50</code>, lower tail.<br>(c) <code>H₀: μ = 50</code> vs <code>Ha: μ ≠ 50</code>, two-tailed.<br>(d) Same as (c): "different" means ≠, two-tailed.<br>(e) <code>H₀: μ ≤ 50</code> vs <code>Ha: μ &gt; 50</code>, upper tail (here we want to establish the excess).</div></li>
+      <li><span class="lab">(a) 與 (b) 一樣？/ Why (a) and (b) coincide</span>
+        <div class="zh">對。<b>一段話陳述現況，與想推翻它，會得到同一組假設</b>——因為等號永遠留給 H₀。差別只在研究動機，不在數學形式。</div>
+        <div class="en">Yes. <b>Stating a status quo and wanting to overturn it produce the same pair</b>, because equality always stays in H₀. The difference is motivation, not mathematics.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a)(b) 左尾 Ha: μ&lt;50；(c)(d) 雙尾 Ha: μ≠50；(e) 右尾 Ha: μ&gt;50。</span><span class="en"><b>Answer:</b> (a)(b) lower, Ha: μ&lt;50; (c)(d) two-tailed, Ha: μ≠50; (e) upper, Ha: μ&gt;50.</span></div>
+  </div></details>
+</section>
+
+<!-- Q3 -->
+<section id="q3">
+  <div class="qtop"><span class="qn">Q3</span><span class="lv">§04 · 單尾與雙尾</span><span class="tp">尾巴的代價</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　同一筆資料算出 <code>z = 1.90</code>（σ 已知的右側檢定）。<br>(a) 若 <code>Ha: μ &gt; μ₀</code>、<code>α = .05</code>，拒絕嗎？<br>(b) 若 <code>Ha: μ ≠ μ₀</code>、<code>α = .05</code>，拒絕嗎？<br>(c) 有人說「雙尾沒顯著，那改 reporting 單尾就好了」。錯在哪？</div>
+    <div class="en"><b>Question.</b> One dataset gives <code>z = 1.90</code> (σ known, upper side). (a) With <code>Ha: μ &gt; μ₀</code>, <code>α = .05</code>, reject? (b) With <code>Ha: μ ≠ μ₀</code>, <code>α = .05</code>, reject? (c) Someone says "if two-sided is not significant, just report one-sided". What is wrong with that?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">單尾判決 / One-tailed decision</span>
+        <div class="zh">右尾 <code>z₀.₀₅ = 1.645</code>。<code>1.90 &gt; 1.645</code> → <span class="rej">拒絕</span>。<code>p = P(Z &gt; 1.90) = 0.0287 &lt; .05</code>。</div>
+        <div class="en">Upper tail <code>z₀.₀₅ = 1.645</code>. Since <code>1.90 &gt; 1.645</code> → <span class="rej">reject</span>. <code>p = P(Z &gt; 1.90) = 0.0287 &lt; .05</code>.</div></li>
+      <li><span class="lab">雙尾判決 / Two-tailed decision</span>
+        <div class="zh">雙尾要把 α 拆兩邊，<code>z₀.₀₂₅ = 1.960</code>。<code>1.90 &lt; 1.960</code> → <span class="norej">不拒絕</span>。<code>p = 2 × 0.0287 = 0.0574 &gt; .05</code>。</div>
+        <div class="en">Two-tailed splits α: <code>z₀.₀₂₅ = 1.960</code>. Since <code>1.90 &lt; 1.960</code> → <span class="norej">do not reject</span>. <code>p = 2 × 0.0287 = 0.0574 &gt; .05</code>.</div></li>
+      <li><span class="lab">同一筆資料，兩個結論 / Same data, two verdicts</span>
+        <div class="zh">這不是矛盾，是代價不同：單尾把全部 5% 放在一邊，所以比較容易拒絕；雙尾分兩邊，每次都要跨過 1.960 的高門檻。<b>power 的增益是用「完全放棄另一個方向」換來的。</b></div>
+        <div class="en">Not a contradiction—a different price. One-tailed puts all 5% on one side and is easier to reject; two-tailed splits it and needs the higher 1.960 bar. <b>The power gain is bought by giving up the other direction entirely.</b></div></li>
+      <li><span class="lab">為什麼不能事後改 / Why you cannot switch later</span>
+        <div class="zh">看到 z 是正的就選右尾，等於利用資料決定假設，真正的型一錯誤率會變成約 10%（兩邊各有 5% 被拿去用）。<b>方向必須在收資料前定好</b>——這正是 §15 十步流程把「定義研究問題」放在第 1 步的原因。</div>
+        <div class="en">Choosing the upper tail after seeing a positive z lets the data pick the hypothesis; the true Type I rate becomes about 10% (5% from each side). <b>The direction must be fixed before collecting data</b>—exactly why §15 puts "define the research question" at step 1.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) 拒絕（p=0.0287）；(b) 不拒絕（p=0.0574）；(c) 事後選尾巴是 p-hacking，會讓 α 失控。</span><span class="en"><b>Answer:</b> (a) reject (p=0.0287); (b) do not reject (p=0.0574); (c) choosing a tail after seeing data is p-hacking and inflates α.</span></div>
+  </div></details>
+</section>
+
+<!-- Q4 -->
+<section id="q4">
+  <div class="qtop"><span class="qn">Q4</span><span class="lv">§05 · 型一與型二錯誤</span><span class="tp">期望誤判</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　一個檢定長期重複使用。研究人員做的 100 次檢定中，有 60 次 H₀ 其實為真、40 次 Ha 其實為真。已知 <code>α = .05</code>、<code>β = .20</code>。<br>(a) 期望犯幾次型一錯誤？(b) 期望犯幾次型二錯誤？(c) 期望總共幾次判決是錯的？(d) 若把 α 降到 .01（β 升到 .35），總錯誤次數變成多少？</div>
+    <div class="en"><b>Question.</b> A test is used repeatedly. Of 100 applications, H₀ is actually true in 60 and Ha is actually true in 40. Given <code>α = .05</code> and <code>β = .20</code>: (a) expected Type I errors? (b) expected Type II errors? (c) total expected wrong decisions? (d) If α drops to .01 and β rises to .35, what is the new total?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">型一只發生在 H₀ 為真時 / Type I only when H₀ is true</span>
+        <div class="zh"><code>60 × 0.05 = 3</code> 次。型一是「沒問題卻誤報」。</div>
+        <div class="en"><code>60 × 0.05 = 3</code>. Type I is a false alarm when nothing is wrong.</div></li>
+      <li><span class="lab">型二只發生在 Ha 為真時 / Type II only when Ha is true</span>
+        <div class="zh"><code>40 × 0.20 = 8</code> 次。型二是「有問題卻漏接」。</div>
+        <div class="en"><code>40 × 0.20 = 8</code>. Type II is a missed signal when there is something to find.</div></li>
+      <li><span class="lab">加總 / Total</span>
+        <div class="zh"><code>3 + 8 = 11</code> 次，也就是 100 次裡約 11% 判錯。</div>
+        <div class="en"><code>3 + 8 = 11</code>, about 11% wrong decisions.</div></li>
+      <li><span class="lab">降低 α 之後 / After lowering α</span>
+        <div class="zh">型一 <code>60 × .01 = 0.6</code>；型二 <code>40 × .35 = 14</code>；總共 <code>14.6</code> 次。<b>錯誤反而變多</b>——因為這批檢定裡「真的有效果」的比例不低，漏接的代價超過誤報省下的。<br>這告訴我們：α 沒有「愈小愈好」的絕對標準，要看兩種錯誤的相對成本。想同時降低兩者只能加大 n。</div>
+        <div class="en">Type I <code>60 × .01 = 0.6</code>; Type II <code>40 × .35 = 14</code>; total <code>14.6</code>. <b>Errors increased</b>, because real effects are common here and missed signals cost more than the false alarms saved.<br>Lesson: smaller α is not automatically better—it depends on the relative cost of the two errors. Only a larger n lowers both.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) 3 次；(b) 8 次；(c) 11 次；(d) 0.6 + 14 = 14.6 次，比原本更多。</span><span class="en"><b>Answer:</b> (a) 3; (b) 8; (c) 11; (d) 0.6 + 14 = 14.6, more than before.</span></div>
+  </div></details>
+</section>
+
+<!-- Q5 -->
+<section id="q5">
+  <div class="qtop"><span class="qn">Q5</span><span class="lv">§06 · α、β 與取捨</span><span class="tp">p-hacking</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　某雙尾檢定得到 <code>z = 1.83</code>。<br>(a) 在 <code>α = .05</code> 判決；(b) 在 <code>α = .10</code> 判決；(c) 算出 p 值；(d) 研究助理說「反正 p = .067 很接近 .05，我們就寫 α = .10 並說顯著」。這在統計上有什麼問題？</div>
+    <div class="en"><b>Question.</b> A two-tailed test gives <code>z = 1.83</code>. Decide at (a) <code>α = .05</code> and (b) <code>α = .10</code>. (c) Find the p-value. (d) An assistant says "p = .067 is close to .05, so let's just declare α = .10 and call it significant". What is statistically wrong?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">兩種門檻 / Two thresholds</span>
+        <div class="zh"><code>α=.05</code>：<code>z₀.₀₂₅=1.960</code>，<code>1.83&lt;1.960</code> → <span class="norej">不拒絕</span>。<br><code>α=.10</code>：<code>z₀.₀₅=1.645</code>，<code>1.83&gt;1.645</code> → <span class="rej">拒絕</span>。</div>
+        <div class="en"><code>α=.05</code>: <code>z₀.₀₂₅=1.960</code>, <code>1.83&lt;1.960</code> → <span class="norej">do not reject</span>.<br><code>α=.10</code>: <code>z₀.₀₅=1.645</code>, <code>1.83&gt;1.645</code> → <span class="rej">reject</span>.</div></li>
+      <li><span class="lab">p 值 / p-value</span>
+        <div class="zh"><code>p = 2 × P(Z &gt; 1.83) = 2 × 0.0336 = 0.0672</code>。跟兩個門檻比對，結論完全一致。</div>
+        <div class="en"><code>p = 2 × P(Z &gt; 1.83) = 2 × 0.0336 = 0.0672</code>. Both decisions agree with the p-value comparison.</div></li>
+      <li><span class="lab">為什麼不能事後換 α / Why α cannot be changed later</span>
+        <div class="zh">α 是<b>事先</b>願意接受的誤報率，是規則不是結果。看到 p 值才挑門檻，等於偷偷放大真正的型一錯誤率——這就是 p-hacking 的技術本質。課件 §06 用這題當標準示範。</div>
+        <div class="en">α is the false-alarm rate you <b>pre-commit</b> to; it is a rule, not an outcome. Picking a threshold after seeing p secretly inflates the true Type I rate—this is p-hacking in technical form. The notes use this exact case as the canonical example in §06.</div></li>
+      <li><span class="lab">四個槓桿複習 / The four levers</span>
+        <div class="zh"><code>α↓ → β↑</code>；<code>n↑ → β↓</code>；<code>|μₐ−μ₀|↑ → β↓</code>；<code>σ↑ → β↑</code>。想同時壓低 α 和 β，只有加大 n 或降低 σ。</div>
+        <div class="en"><code>α↓ → β↑</code>; <code>n↑ → β↓</code>; <code>|μₐ−μ₀|↑ → β↓</code>; <code>σ↑ → β↑</code>. To lower both α and β, increase n or reduce σ.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>p = 0.0672；α=.05 <span class="norej">不拒絕</span>，α=.10 <span class="rej">拒絕</span>；事後挑 α 是 p-hacking，α 必須事先固定。</span><span class="en"><b>Answer:</b> p = 0.0672; not rejected at .05, rejected at .10; switching α afterwards is p-hacking—fix α in advance.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q6 -->
+<section id="q6">
+  <div class="qtop"><span class="qn">Q6</span><span class="lv">§07 · 臨界值法</span><span class="tp">Z 右尾</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　已知 <code>σ = 12</code>，<code>H₀: μ = 80</code> vs <code>Ha: μ &gt; 80</code>，<code>n = 36</code>、<code>x̄ = 84.5</code>、<code>α = .01</code>。用<b>臨界值法</b>完整判決，並把門檻換算到 x̄ 尺度。</div>
+    <div class="en"><b>Question.</b> Given <code>σ = 12</code>, <code>H₀: μ = 80</code> vs <code>Ha: μ &gt; 80</code>, <code>n = 36</code>, <code>x̄ = 84.5</code>, <code>α = .01</code>. Decide using the <b>critical-value method</b> and convert the threshold to the x̄ scale.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">標準誤 / Standard error</span>
+        <div class="zh"><code>SE = 12/√36 = 2</code>。</div>
+        <div class="en"><code>SE = 12/√36 = 2</code>.</div></li>
+      <li><span class="lab">算 z / Compute z</span>
+        <div class="zh"><code>z = (84.5 − 80)/2 = 2.25</code>。</div>
+        <div class="en"><code>z = (84.5 − 80)/2 = 2.25</code>.</div></li>
+      <li><span class="lab">找臨界值 / Find the critical value</span>
+        <div class="zh">右尾 <code>α=.01 → z₀.₀₁ = 2.326</code>。<code>2.25 &lt; 2.326</code> → <span class="norej">不拒絕</span>。<br>換到 x̄ 尺度：<code>c = 80 + 2.326 × 2 = 84.6527</code>；<code>84.5 &lt; 84.65</code>，結論一致。</div>
+        <div class="en">Upper tail <code>α=.01 → z₀.₀₁ = 2.326</code>. Since <code>2.25 &lt; 2.326</code> → <span class="norej">do not reject</span>.<br>On the x̄ scale: <code>c = 80 + 2.326 × 2 = 84.6527</code>; <code>84.5 &lt; 84.65</code>, same verdict.</div></li>
+      <li><span class="lab">這題的直覺陷阱 / Intuition trap</span>
+        <div class="zh">84.5 比 80 高了 4.5，看起來很多，但 α=.01 是很嚴的標準，需要 z &gt; 2.326。這題在提醒：<b>「差很多」和「統計顯著」是兩件事</b>，門檻由 α 和 SE 共同決定。</div>
+        <div class="en">84.5 is 4.5 above 80, which looks like a lot—but α=.01 is strict and needs z &gt; 2.326. <b>"Big difference" and "statistically significant" are different claims</b>; the cutoff is set by α and SE together.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>z = 2.25 &lt; 2.326 → <span class="norej">不拒絕</span>；c = 84.6527，x̄ = 84.5 &lt; c。</span><span class="en"><b>Answer:</b> z = 2.25 &lt; 2.326 → <span class="norej">do not reject</span>; c = 84.6527 and x̄ = 84.5 &lt; c.</span></div>
+  </div></details>
+</section>
+
+<!-- Q7 -->
+<section id="q7">
+  <div class="qtop"><span class="qn">Q7</span><span class="lv">§08 · P 值法</span><span class="tp">與臨界值法等價</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　用 Q6 的同一筆資料（<code>z = 2.25</code>，右尾，<code>α = .01</code>）。<br>(a) 用 p 值法判決；(b) 若改成<b>雙尾</b> <code>α = .05</code>，結論會不會變？(c) 說明為什麼兩種方法（與 Q6 的臨界值法）永遠給出同一個答案。</div>
+    <div class="en"><b>Question.</b> Use Q6's data (<code>z = 2.25</code>, upper tail, <code>α = .01</code>). (a) Decide with the p-value method. (b) Would the verdict change for a <b>two-tailed</b> test at <code>α = .05</code>? (c) Explain why this method and Q6's critical-value method always agree.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">右尾 p 值 / Upper-tail p</span>
+        <div class="zh"><code>p = P(Z &gt; 2.25) = 0.01222</code>。<code>0.01222 &gt; 0.01</code> → <span class="norej">不拒絕</span>，與 Q6 完全一致。</div>
+        <div class="en"><code>p = P(Z &gt; 2.25) = 0.01222</code>. Since <code>0.01222 &gt; 0.01</code> → <span class="norej">do not reject</span>, exactly as in Q6.</div></li>
+      <li><span class="lab">改雙尾 α=.05 / Two-tailed at .05</span>
+        <div class="zh"><code>p = 2 × 0.01222 = 0.0244 &lt; .05</code> → <span class="rej">拒絕</span>。<br>同一個 z，只因為 α 從 .01（單尾）改成 .05（雙尾）就翻盤——不是資料變了，是規則變了。</div>
+        <div class="en"><code>p = 2 × 0.01222 = 0.0244 &lt; .05</code> → <span class="rej">reject</span>.<br>Same z, opposite verdict—only because the rule changed from .01 one-tailed to .05 two-tailed.</div></li>
+      <li><span class="lab">為什麼等價 / Why they are equivalent</span>
+        <div class="zh">臨界值法是先設誤報率 α，再算出門檻 c；p 值法是先算出觀察值有多極端，再跟 α 比。<b>兩者用的是同一條常態曲線、同一個尾巴面積</b>，只是敘述方向相反：<code>z &gt; z_α ⟺ p &lt; α</code>。</div>
+        <div class="en">The critical-value method fixes α then finds the cutoff c; the p-value method measures how extreme the observation is then compares with α. <b>They use the same curve and the same tail area</b>, just phrased in opposite directions: <code>z &gt; z_α ⟺ p &lt; α</code>.</div></li>
+      <li><span class="lab">何時 p 值較方便 / When p is handier</span>
+        <div class="zh">p 值讓讀者自己決定門檻（例如 p = .012 在 .05 顯著、在 .01 不顯著），也方便和別人溝通；臨界值法在考試和需要事先寫死決策規則時更清楚。</div>
+        <div class="en">A p-value lets readers apply their own threshold (p = .012 is significant at .05 but not .01) and communicates easily; critical values are clearer in exams or when a decision rule must be fixed in advance.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) p = 0.01222 &gt; .01，<span class="norej">不拒絕</span>；(b) 雙尾 p = 0.0244 &lt; .05，<span class="rej">拒絕</span>；(c) 兩者等價，因為 <code>z &gt; z_α ⟺ p &lt; α</code>。</span><span class="en"><b>Answer:</b> (a) p = 0.01222 &gt; .01, <span class="norej">do not reject</span>; (b) two-tailed p = 0.0244 &lt; .05, <span class="rej">reject</span>; (c) equivalent because <code>z &gt; z_α ⟺ p &lt; α</code>.</span></div>
+  </div></details>
+</section>
+
+<!-- Q8 -->
+<section id="q8">
+  <div class="qtop"><span class="qn">Q8</span><span class="lv">§09 · 拒絕域總表</span><span class="tp">三種情況並排</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　觀察值固定為 <code>z = −1.90</code>。對下面三種檢定，各寫出拒絕域、臨界值、p 值與判決：<br>(a) 雙尾 <code>α = .05</code>；(b) 右尾 <code>α = .05</code>；(c) 左尾 <code>α = .01</code>。</div>
+    <div class="en"><b>Question.</b> Keep the observed value at <code>z = −1.90</code>. For each case write the rejection region, critical value, p-value and decision: (a) two-tailed <code>α = .05</code>; (b) upper-tailed <code>α = .05</code>; (c) lower-tailed <code>α = .01</code>.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">先把 p 值算出來 / p-values first</span>
+        <div class="zh">左尾面積 <code>Φ(−1.90) = 0.0287</code>；右尾面積 <code>1 − Φ(−1.90) = 0.9713</code>；雙尾 <code>2 × 0.0287 = 0.0574</code>。<b>同一個 z，三種尾巴配出三個完全不同的 p 值。</b></div>
+        <div class="en">Lower area <code>Φ(−1.90) = 0.0287</code>; upper area <code>1 − Φ(−1.90) = 0.9713</code>; two-tailed <code>2 × 0.0287 = 0.0574</code>. <b>One z, three very different p-values depending on the tail.</b></div></li>
+      <li><span class="lab">(a) 雙尾 α=.05 / Two-tailed</span>
+        <div class="zh">拒絕域 <code>|z| &gt; 1.960</code>。<code>1.90 &lt; 1.960</code>，p = .0574 &gt; .05 → <span class="norej">不拒絕</span>。</div>
+        <div class="en">Reject when <code>|z| &gt; 1.960</code>. Since 1.90 &lt; 1.960 and p = .0574 &gt; .05 → <span class="norej">do not reject</span>.</div></li>
+      <li><span class="lab">(b) 右尾 α=.05 / Upper-tailed</span>
+        <div class="zh">拒絕域 <code>z &gt; 1.645</code>。<code>−1.90</code> 在完全相反的方向，p = 0.9713 → <span class="norej">不拒絕</span>，而且離拒絕非常遠。</div>
+        <div class="en">Reject when <code>z &gt; 1.645</code>. <code>−1.90</code> is in the opposite direction, p = 0.9713 → <span class="norej">do not reject</span>, nowhere near the region.</div></li>
+      <li><span class="lab">(c) 左尾 α=.01 / Lower-tailed</span>
+        <div class="zh">拒絕域 <code>z &lt; −2.326</code>。<code>−1.90 &gt; −2.326</code>，p = .0287 &gt; .01 → <span class="norej">不拒絕</span>。</div>
+        <div class="en">Reject when <code>z &lt; −2.326</code>. Since −1.90 &gt; −2.326 and p = .0287 &gt; .01 → <span class="norej">do not reject</span>.</div></li>
+      <li><span class="lab">本題結論 / Takeaway</span>
+        <div class="zh">三種情況<span class="norej">全部不拒絕</span>，但理由完全不同：(a) 差一點點，(b) 方向相反，(c) 門檻太嚴。<b>考試寫「不拒絕」若不寫理由，無從判斷你是否真的懂。</b></div>
+        <div class="en">All three end in <span class="rej">not rejecting</span>, but for different reasons: (a) just short, (b) wrong direction, (c) strict threshold. <b>Writing only "do not reject" without a reason hides whether you actually understood.</b></div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) |z|&gt;1.960，p=.0574，不拒絕；(b) z&gt;1.645，p=.9713，不拒絕；(c) z&lt;−2.326，p=.0287，不拒絕。</span><span class="en"><b>Answer:</b> (a) |z|&gt;1.960, p=.0574, not reject; (b) z&gt;1.645, p=.9713, not reject; (c) z&lt;−2.326, p=.0287, not reject.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q9 -->
+<section id="q9">
+  <div class="qtop"><span class="qn">Q9</span><span class="lv">§10 · 檢定力</span><span class="tp">β 關鍵在重疊</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　<code>H₀: μ = 50</code> vs <code>Ha: μ &gt; 50</code>，<code>σ = 8</code>、<code>n = 16</code>、<code>α = .05</code>。若真實平均值是 <code>μₐ = 54</code>，求 (a) 決策門檻 c；(b) β；(c) power；(d) 用一句話解釋 β 為什麼不小。</div>
+    <div class="en"><b>Question.</b> <code>H₀: μ = 50</code> vs <code>Ha: μ &gt; 50</code>, with <code>σ = 8</code>, <code>n = 16</code>, <code>α = .05</code>. If the true mean is <code>μₐ = 54</code>, find (a) the cutoff c, (b) β, (c) power, and (d) explain in one sentence why β is not small.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">標準誤與門檻 / SE and cutoff</span>
+        <div class="zh"><code>SE = 8/√16 = 2</code>；<code>c = 50 + 1.645 × 2 = 53.2897</code>。</div>
+        <div class="en"><code>SE = 8/√16 = 2</code>; <code>c = 50 + 1.645 × 2 = 53.2897</code>.</div></li>
+      <li><span class="lab">β 是漏接機率 / β is the miss rate</span>
+        <div class="fx"><span class="row">z<sub>β</sub> = <span class="fr"><span class="n">c − μₐ</span><span class="d">SE</span></span> = <span class="fr"><span class="n">53.2897 − 54</span><span class="d">2</span></span> = <em>−0.3551</em></span></div>
+        <div class="zh"><code>β = Φ(−0.3551) = 0.3612</code>；<code>power = 1 − β = 0.6388</code>。</div>
+        <div class="en"><code>β = Φ(−0.3551) = 0.3612</code>; <code>power = 1 − β = 0.6388</code>.</div></li>
+      <li><span class="lab">為什麼 β 這麼大 / Why β is large</span>
+        <div class="zh">H₀ 曲線中心 50、真實曲線中心 54，但兩條曲線的標準誤都是 2，<b>重疊仍然很多</b>。門檻 53.29 離真實中心 54 只有 0.71 個 SE，所以真實分配有 36% 落在門檻左邊被誤判為「沒效果」。</div>
+        <div class="en">The H₀ curve is centred at 50 and the true curve at 54, but both have SE 2, so they still <b>overlap heavily</b>. The cutoff 53.29 is only 0.71 SE below the true mean, so 36% of the true distribution falls left of it and is called "no effect".</div></li>
+      <li><span class="lab">power 的依賴性 / Power depends on effect size</span>
+        <div class="zh">如果 μₐ = 60（差距更大），兩條曲線分得更開，β 會大幅下降。<b>講 power 一定要講「針對多大的效果」</b>，沒有 μₐ 就沒有 power 這個數字。</div>
+        <div class="en">If μₐ = 60 (a bigger gap), the curves separate and β drops sharply. <b>Power is always relative to a specific effect size</b>—no μₐ, no number.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>c = 53.2897，β = 0.3612，power = 0.6388；β 大是因為兩條分配重疊仍多。</span><span class="en"><b>Answer:</b> c = 53.2897, β = 0.3612, power = 0.6388; β is large because the two distributions still overlap a lot.</span></div>
+  </div></details>
+</section>
+
+<!-- Q10 -->
+<section id="q10">
+  <div class="qtop"><span class="qn">Q10</span><span class="lv">§11 · 樣本數設計</span><span class="tp">把 power 補到 .90</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　延續 Q9。想讓 <code>α = .05</code> 右尾檢定在 <code>μₐ = 54</code> 時有 <code>power = .90</code>，<code>σ = 8</code> 不變。<br>(a) 需要的樣本數 n 是多少？(b) 為什麼 n 從 16 增加到這個數字就能改善 power？(c) 若算出來是小數，要怎麼處理？</div>
+    <div class="en"><b>Question.</b> Continue Q9. We want the <code>α = .05</code> upper-tailed test to achieve <code>power = .90</code> at <code>μₐ = 54</code>, with the same <code>σ = 8</code>. (a) What n is required? (b) Why does increasing n from 16 improve power? (c) How should a fractional result be handled?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">公式 / Formula</span>
+        <div class="fx"><span class="row">n = <span class="fr"><span class="n">(z<sub>α</sub> + z<sub>β</sub>) σ</span><span class="d">δ</span></span><sup>2</sup> = <span class="fr"><span class="n">(1.644854 + 1.281552) × 8</span><span class="d">4</span></span><sup>2</sup> = <em>34.255</em></span></div>
+        <div class="zh"><code>δ = 54 − 50 = 4</code>；power = .90 → <code>β = .10</code>，<code>z₀.₁₀ = 1.2816</code>。</div>
+        <div class="en"><code>δ = 54 − 50 = 4</code>; power = .90 → <code>β = .10</code>, <code>z₀.₁₀ = 1.2816</code>.</div></li>
+      <li><span class="lab">向上取整 / Round up</span>
+        <div class="zh"><code>n = 35</code>。34 不夠——34.255 代表 34 的 power 會略低於 .90。<b>樣本數只能多不能少。</b></div>
+        <div class="en"><code>n = 35</code>. Thirty-four is not enough: 34.255 means n = 34 gives slightly less than .90. <b>Sample size only rounds up.</b></div></li>
+      <li><span class="lab">n 大為什麼有效 / Why larger n helps</span>
+        <div class="zh"><code>SE = σ/√n</code>，n 從 16 變成 35，SE 從 2 降到 <code>8/√35 = 1.352</code>。兩條鐘形曲線都變瘦，重疊面積變小 → β 下降 → power 上升。<br>這也是 §06 說的：<b>加大 n 是唯一能同時讓 α 和 β 都變好的槓桿</b>。</div>
+        <div class="en"><code>SE = σ/√n</code>; going from n = 16 to 35 shrinks SE from 2 to <code>8/√35 = 1.352</code>. Both bell curves narrow, overlap shrinks, β falls and power rises.<br>As §06 put it: <b>increasing n is the only lever that improves α and β together</b>.</div></li>
+      <li><span class="lab">δ 從哪裡來 / Where δ comes from</span>
+        <div class="zh">δ = 4 不是從資料估出來的，而是「多大的改善才值得被偵測到」——這是研究設計的判斷，必須在收資料前決定。</div>
+        <div class="en">δ = 4 is not estimated from data; it is "how large an improvement is worth detecting"—a design judgment that must be made before collecting data.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>n = 34.255 → <b>35</b>；n 變大使 SE 變小、兩分配重疊變少；小數一律無條件進位。</span><span class="en"><b>Answer:</b> n = 34.255 → <b>35</b>; larger n shrinks SE and overlap; always round up.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q11 -->
+<section id="q11">
+  <div class="qtop"><span class="qn">Q11</span><span class="lv">§12 · 均值 σ 已知</span><span class="tp">雙尾 Z</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　某製程歷史平均 <code>μ₀ = 200</code>，<code>σ = 25</code> 已知。抽 <code>n = 50</code>，得到 <code>x̄ = 210</code>。在 <code>α = .05</code> 下檢定平均值是否改變，並算出 95% 信賴區間對照。</div>
+    <div class="en"><b>Question.</b> A process has historical mean <code>μ₀ = 200</code> and known <code>σ = 25</code>. A sample of <code>n = 50</code> gives <code>x̄ = 210</code>. Test whether the mean has changed at <code>α = .05</code>, and compute the 95% CI as a cross-check.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">假設 / Hypotheses</span>
+        <div class="zh"><code>H₀: μ = 200</code> vs <code>Ha: μ ≠ 200</code>，雙尾，σ 已知 → Z。</div>
+        <div class="en"><code>H₀: μ = 200</code> vs <code>Ha: μ ≠ 200</code>, two-tailed, σ known → Z.</div></li>
+      <li><span class="lab">統計量 / Statistic</span>
+        <div class="zh"><code>SE = 25/√50 = 3.5355</code>；<code>z = (210−200)/3.5355 = 2.828</code>。</div>
+        <div class="en"><code>SE = 25/√50 = 3.5355</code>; <code>z = (210−200)/3.5355 = 2.828</code>.</div></li>
+      <li><span class="lab">判決 / Decision</span>
+        <div class="zh"><code>|2.828| &gt; 1.960</code> → <span class="rej">拒絕</span>。<code>p = 2 × P(Z &gt; 2.828) = 0.00468</code>。</div>
+        <div class="en"><code>|2.828| &gt; 1.960</code> → <span class="rej">reject</span>. <code>p = 2 × P(Z &gt; 2.828) = 0.00468</code>.</div></li>
+      <li><span class="lab">95% CI / Confidence interval</span>
+        <div class="zh">σ 已知 → 用 Z 臨界值：<code>210 ± 1.960 × 3.5355 = 210 ± 6.93 = [203.07, 216.93]</code>。200 落在區間外 → 與拒絕一致。</div>
+        <div class="en">σ known → use the Z critical value: <code>210 ± 1.960 × 3.5355 = 210 ± 6.93 = [203.07, 216.93]</code>. 200 lies outside → consistent.</div></li>
+      <li><span class="lab">別把 σ 已知寫成 t / Don't use t here</span>
+        <div class="zh">即使 n = 50 算 t 也會得到接近的答案，但<strong>正確做法是 Z</strong>：σ 已知就沒有「估計 s 的不確定性」要補償。df 在這裡不存在。</div>
+        <div class="en">Even though t would give a similar answer at n = 50, <strong>Z is correct</strong>: with σ known there is no uncertainty from estimating s to compensate for. There is no df here.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>z = 2.828，p = 0.00468 → <span class="rej">拒絕</span>；95% CI = [203.07, 216.93] 不含 200。</span><span class="en"><b>Answer:</b> z = 2.828, p = 0.00468 → <span class="rej">reject</span>; 95% CI = [203.07, 216.93], excluding 200.</span></div>
+  </div></details>
+</section>
+
+<!-- Q12 -->
+<section id="q12">
+  <div class="qtop"><span class="qn">Q12</span><span class="lv">§13 · 均值 σ 未知</span><span class="tp">t 檢定</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　<code>σ</code> 未知。<code>n = 20</code>、<code>x̄ = 78.5</code>、<code>s = 6.2</code>，檢定 <code>H₀: μ = 75</code> vs <code>Ha: μ &gt; 75</code>，<code>α = .05</code>。求 t、臨界值、p 值與 95% 單側下限。</div>
+    <div class="en"><b>Question.</b> σ is unknown: <code>n = 20</code>, <code>x̄ = 78.5</code>, <code>s = 6.2</code>. Test <code>H₀: μ = 75</code> vs <code>Ha: μ &gt; 75</code> at <code>α = .05</code>. Find t, the critical value, the p-value and a 95% one-sided lower bound.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">自由度 / Degrees of freedom</span>
+        <div class="zh">用 s 代替 σ → t 分配，<code>df = n − 1 = 19</code>。<b>只有 σ 已知才能用 Z，跟 n 大小無關。</b></div>
+        <div class="en">s replaces σ → t distribution with <code>df = n − 1 = 19</code>. <b>Only known σ justifies Z; sample size is irrelevant to that choice.</b></div></li>
+      <li><span class="lab">統計量 / Statistic</span>
+        <div class="zh"><code>SE = 6.2/√20 = 1.3864</code>；<code>t = (78.5−75)/1.3864 = 2.525</code>。</div>
+        <div class="en"><code>SE = 6.2/√20 = 1.3864</code>; <code>t = (78.5−75)/1.3864 = 2.525</code>.</div></li>
+      <li><span class="lab">判決 / Decision</span>
+        <div class="zh"><code>t₀.₀₅,₁₉ = 1.729</code>。<code>2.525 &gt; 1.729</code> → <span class="rej">拒絕</span>。<code>p = P(t₁₉ &gt; 2.525) = 0.0103</code>。</div>
+        <div class="en"><code>t₀.₀₅,₁₉ = 1.729</code>. Since <code>2.525 &gt; 1.729</code> → <span class="rej">reject</span>. <code>p = P(t₁₉ &gt; 2.525) = 0.0103</code>.</div></li>
+      <li><span class="lab">95% 雙側區間（順便）/ Two-sided 95% CI</span>
+        <div class="zh"><code>t₀.₀₂₅,₁₉ = 2.093</code>，<code>78.5 ± 2.093 × 1.3864 = [75.60, 81.40]</code>。75 在區間外，與右尾拒絕一致。<br>若真要「95% 單側下限」：<code>78.5 − 1.729 × 1.3864 = 76.10</code>。</div>
+        <div class="en"><code>t₀.₀₂₅,₁₉ = 2.093</code>, so <code>78.5 ± 2.093 × 1.3864 = [75.60, 81.40]</code>; 75 is outside, consistent with the upper-tail rejection.<br>For a genuine 95% one-sided lower bound: <code>78.5 − 1.729 × 1.3864 = 76.10</code>.</div></li>
+      <li><span class="lab">t 與 Z 的差 / t versus Z</span>
+        <div class="zh">此處 t 臨界值 1.729 &gt; Z 的 1.645，p 值 0.0103 &gt; 用 Z 算的 0.0058。<b>未知的 σ 讓我們比較保守</b>，這是對估計不確定性的適當付費。</div>
+        <div class="en">Here t's 1.729 &gt; Z's 1.645 and p = 0.0103 &gt; the Z-based 0.0058. <b>An unknown σ makes us appropriately conservative</b>—that is the price of estimation uncertainty.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>t = 2.525，df = 19，p = 0.0103 → <span class="rej">拒絕</span>；95% CI = [75.60, 81.40]。</span><span class="en"><b>Answer:</b> t = 2.525, df = 19, p = 0.0103 → <span class="rej">reject</span>; 95% CI = [75.60, 81.40].</span></div>
+  </div></details>
+</section>
+
+<!-- Q13 -->
+<section id="q13">
+  <div class="qtop"><span class="qn">Q13</span><span class="lv">§14 · 變異數檢定</span><span class="tp">χ² 雙尾</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　規範標準差 <code>σ₀ = 12</code>。抽 <code>n = 25</code>，得到 <code>s = 16.2</code>。在 <code>α = .05</code> 下做<b>雙尾</b>檢定。求統計量、兩個臨界值與 p 值，並解釋兩界為什麼不等距。</div>
+    <div class="en"><b>Question.</b> The specified standard deviation is <code>σ₀ = 12</code>. A sample of <code>n = 25</code> gives <code>s = 16.2</code>. Perform a <b>two-tailed</b> test at <code>α = .05</code>: find the statistic, both critical values and the p-value, and explain why the bounds are not equidistant.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">統計量 / Statistic</span>
+        <div class="fx"><span class="row">U = <span class="fr"><span class="n">(n−1)s²</span><span class="d">σ₀²</span></span> = <span class="fr"><span class="n">24 × 16.2²</span><span class="d">144</span></span> = <em>43.74</em></span></div>
+        <div class="zh"><code>df = n − 1 = 24</code>，H₀ 下 <code>U ~ χ²(24)</code>。注意是 s 的<b>平方</b>，自由度是 <b>n−1</b>。</div>
+        <div class="en"><code>df = n − 1 = 24</code>; under H₀, <code>U ~ χ²(24)</code>. Note the <b>square</b> on s and the <b>n−1</b> degrees of freedom.</div></li>
+      <li><span class="lab">雙尾臨界值 / Two-tailed critical values</span>
+        <div class="zh"><code>χ²₀.₀₂₅,₂₄ = 12.401</code>（下界）、<code>χ²₀.₉₇₅,₂₄ = 39.364</code>（上界）。<code>43.74 &gt; 39.364</code> → <span class="rej">拒絕</span>。p 值 <code>= 2 × P(χ²₂₄ &gt; 43.74) = 0.0164</code>。</div>
+        <div class="en"><code>χ²₀.₀₂₅,₂₄ = 12.401</code> (lower), <code>χ²₀.₉₇₅,₂₄ = 39.364</code> (upper). Since <code>43.74 &gt; 39.364</code> → <span class="rej">reject</span>. The p-value is <code>2 × P(χ²₂₄ &gt; 43.74) = 0.0164</code>.</div></li>
+      <li><span class="lab">為什麼不對稱 / Why asymmetric</span>
+        <div class="zh">χ²(24) 平均數是 24；下界 12.4 距它 11.6，上界 39.4 距它 15.4。<b>χ² 右偏且左邊被 0 擋住</b>，左尾要往內縮才能累積 2.5%。課件 §19 考前檢查特別提醒：<b>不能用「平均數 ± 同一個數」</b>。</div>
+        <div class="en">χ²(24) has mean 24; the lower bound is 11.6 below it while the upper is 15.4 above. <b>χ² is right-skewed and bounded at zero</b>, so the left tail must stay closer in to accumulate 2.5%. The §19 checklist warns: <b>never use mean ± k</b>.</div></li>
+      <li><span class="lab">結論 / Conclusion</span>
+        <div class="zh">在 5% 水準下，標準差與 12 有顯著差異，且資料指向「變異變大」。</div>
+        <div class="en">At the 5% level the standard deviation differs significantly from 12, with the sample pointing to increased variability.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>U = 43.74，df = 24，下界 12.401／上界 39.364，p = 0.0164 → <span class="rej">拒絕</span>；χ² 右偏，故兩界不對稱。</span><span class="en"><b>Answer:</b> U = 43.74, df = 24, bounds 12.401 / 39.364, p = 0.0164 → <span class="rej">reject</span>; χ² is skewed, so the bounds are asymmetric.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q14 -->
+<section id="q14">
+  <div class="qtop"><span class="qn">Q14</span><span class="lv">§15 · 十步流程</span><span class="tp">統計誠信</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　下面是某研究計畫被打亂的步驟（代號 A–J）：<br>
+    A 收集資料　B 建立 H₀ 與 Ha　C 做成業務決策　D 定義研究問題　E 選 α　F 計算統計量與 p 值　G 決定樣本數 n　H 選檢定與抽樣分配　I 陳述統計結論　J 寫決策規則<br>
+    (a) 排出正確順序。(b) 研究助理提議「先抽一批資料看看趨勢，再決定要檢驗什麼、α 訂多少」。這違反了哪一步？會造成什麼後果？</div>
+    <div class="en"><b>Question.</b> Here are ten shuffled steps of a study (A–J):<br>
+    A collect data　B state H₀ and Ha　C make the business decision　D define the research question　E choose α　F compute the statistic and p-value　G decide the sample size n　H pick the test and sampling distribution　I state the statistical conclusion　J write the decision rule<br>
+    (a) Put them in order. (b) An assistant proposes "sample some data first to see the trend, then decide what to test and what α to use". Which step does this violate, and what is the consequence?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">正確順序 / Correct order</span>
+        <div class="zh"><code>D → B → H → E → J → G → A → F → I → C</code>。<br>定義問題 → 假設 → 選檢定 → 選 α → 寫規則 → 定樣本數 → 收資料 → 算統計量 → 統計結論 → 業務決策。</div>
+        <div class="en"><code>D → B → H → E → J → G → A → F → I → C</code>.<br>Question → hypotheses → test → α → rule → sample size → data → statistic → statistical conclusion → business decision.</div></li>
+      <li><span class="lab">收資料排第 7 步的理由 / Why data collection is step 7</span>
+        <div class="zh">課件特別強調：<b>研究問題要在收資料之前形成</b>。若先看資料再訂假設、α、n，等於「看到答案才出題」，會產生選擇性偏誤，名目 α 也不再是真實誤報率。</div>
+        <div class="en">The deck stresses: <b>form the question before collecting data</b>. Deciding hypotheses, α and n after seeing data is "writing the exam after seeing the answer"—it creates selection bias and makes nominal α no longer the true error rate.</div></li>
+      <li><span class="lab">助理違反的不只一步 / More than one violation</span>
+        <div class="zh">主要違反第 1 步（D），連帶破壞第 4、5、6 步（E、J、G）：α 與樣本數都必須在看到資料前固定。這正是 Q3 的「事後選尾巴」和 Q5 的「事後挑 α」的同一個根源。</div>
+        <div class="en">It mainly violates step 1 (D) and thereby breaks steps 4, 5 and 6 (E, J, G): α and sample size must be fixed before data. This is the same root problem as Q3's tail switching and Q5's α cherry-picking.</div></li>
+      <li><span class="lab">最後兩步不能合併 / Keep the last two separate</span>
+        <div class="zh">第 9 步是統計語言（「在 α=.05 下拒絕 H₀」），第 10 步是實際行動（停線、改版、進貨）。<b>統計顯著 ≠ 商業重要</b>，中間還要判斷效果量與成本。</div>
+        <div class="en">Step 9 is statistical language ("reject H₀ at α=.05"); step 10 is action (stop the line, ship the change, reorder). <b>Statistical significance ≠ business importance</b>—effect size and cost still need judgment.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) D→B→H→E→J→G→A→F→I→C；(b) 違反第 1 步（並連帶 4–6 步），先看資料再訂規則會讓 α 失控、產生選擇性偏誤。</span><span class="en"><b>Answer:</b> (a) D→B→H→E→J→G→A→F→I→C; (b) it violates step 1 (and 4–6), inflating α and creating selection bias.</span></div>
+  </div></details>
+</section>
+
+<!-- Q15 -->
+<section id="q15">
+  <div class="qtop"><span class="qn">Q15</span><span class="lv">§16 · 兩母體均值差</span><span class="tp">σ 已知，α=.01</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　比較兩條配方。A：<code>n₁=60</code>、<code>x̄₁=85</code>、<code>σ₁=12</code>；B：<code>n₂=50</code>、<code>x̄₂=79</code>、<code>σ₂=10</code>。在 <code>α = .01</code> 下檢定 <code>H₀: μ₁−μ₂ = 0</code> vs <code>Ha: μ₁−μ₂ ≠ 0</code>。</div>
+    <div class="en"><b>Question.</b> Compare two formulations. A: <code>n₁=60</code>, <code>x̄₁=85</code>, <code>σ₁=12</code>. B: <code>n₂=50</code>, <code>x̄₂=79</code>, <code>σ₂=10</code>. Test <code>H₀: μ₁−μ₂ = 0</code> vs <code>Ha: μ₁−μ₂ ≠ 0</code> at <code>α = .01</code>.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">標準誤：先平方再相加 / SE: square first, then add</span>
+        <div class="fx"><span class="row">SE = <span class="fr"><span class="n">σ₁²</span><span class="d">n₁</span></span> + <span class="fr"><span class="n">σ₂²</span><span class="d">n₂</span></span> = <span class="fr"><span class="n">144</span><span class="d">60</span></span> + <span class="fr"><span class="n">100</span><span class="d">50</span></span> = 2.4 + 2.0 = 4.4 → √4.4 = <em>2.0976</em></span></div>
+        <div class="zh">課件 §19 考前檢查列出的五大失分點之一：<b>兩母體分母忘了先平方</b>。這裡 σ₂ = 10 要變成 σ₂² = 100。</div>
+        <div class="en">One of the five marks-losing habits in the §19 checklist: <b>forgetting to square before dividing</b>. Here σ₂ = 10 must become σ₂² = 100.</div></li>
+      <li><span class="lab">統計量 / Statistic</span>
+        <div class="zh"><code>Z = (85 − 79 − 0)/2.0976 = 2.860</code>。</div>
+        <div class="en"><code>Z = (85 − 79 − 0)/2.0976 = 2.860</code>.</div></li>
+      <li><span class="lab">判決 / Decision</span>
+        <div class="zh">雙尾 <code>α=.01 → z₀.₀₀₅ = 2.576</code>。<code>2.860 &gt; 2.576</code> → <span class="rej">拒絕</span>。<code>p = 2 × P(Z &gt; 2.860) = 0.00423</code>。</div>
+        <div class="en">Two-tailed <code>α=.01 → z₀.₀₀₅ = 2.576</code>. Since <code>2.860 &gt; 2.576</code> → <span class="rej">reject</span>. <code>p = 2 × P(Z &gt; 2.860) = 0.00423</code>.</div></li>
+      <li><span class="lab">若 σ 未知 / If σ were unknown</span>
+        <div class="zh">就該改用兩樣本 t，自由度用 Welch–Satterthwaite 近似，<b>不是直接 n₁+n₂−2</b>（除非能合理假設兩邊變異數相等）。本題 σ 已知，所以 Z 是對的。</div>
+        <div class="en">Use a two-sample t with Welch–Satterthwaite df—<b>not simply n₁+n₂−2</b> unless equal variances are defensible. Here σ is known, so Z is correct.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>SE = 2.0976，Z = 2.860 &gt; 2.576，p = 0.00423 → <span class="rej">拒絕</span>，A 配方平均值較高。</span><span class="en"><b>Answer:</b> SE = 2.0976, Z = 2.860 &gt; 2.576, p = 0.00423 → <span class="rej">reject</span>; formulation A has a higher mean.</span></div>
+  </div></details>
+</section>
+
+<!-- Q16 -->
+<section id="q16">
+  <div class="qtop"><span class="qn">Q16</span><span class="lv">§17 · 兩母體比例差</span><span class="tp">pool 與不 pool</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　A 方案 <code>300</code> 人中 <code>45</code> 人成功；B 方案 <code>240</code> 人中 <code>24</code> 人成功。在 <code>α = .05</code> 下檢定兩方案成功率是否不同，並算<b>未 pooled</b> 的 95% 信賴區間。</div>
+    <div class="en"><b>Question.</b> Plan A: <code>45</code> successes in <code>300</code>. Plan B: <code>24</code> successes in <code>240</code>. Test whether the success rates differ at <code>α = .05</code>, then compute an <b>unpooled</b> 95% confidence interval.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">樣本比例 / Sample proportions</span>
+        <div class="zh"><code>p̂₁ = 45/300 = 0.15</code>、<code>p̂₂ = 24/240 = 0.10</code>，差 <code>0.05</code>。</div>
+        <div class="en"><code>p̂₁ = 45/300 = 0.15</code>, <code>p̂₂ = 24/240 = 0.10</code>, difference <code>0.05</code>.</div></li>
+      <li><span class="lab">檢定要 pool / Pool for the test</span>
+        <div class="zh"><code>p̂_pool = 69/540 = 0.12778</code><br><code>SE_pool = √(0.12778 × 0.87222 × (1/300 + 1/240)) = 0.02891</code><br><code>z = 0.05/0.02891 = 1.729</code>；<code>p = 2 × P(Z &gt; 1.729) = 0.0837 &gt; .05</code> → <span class="norej">不拒絕</span>。</div>
+        <div class="en"><code>p̂_pool = 69/540 = 0.12778</code><br><code>SE_pool = √(0.12778 × 0.87222 × (1/300 + 1/240)) = 0.02891</code><br><code>z = 0.05/0.02891 = 1.729</code>; <code>p = 2 × P(Z &gt; 1.729) = 0.0837 &gt; .05</code> → <span class="norej">do not reject</span>.</div></li>
+      <li><span class="lab">CI 不 pool / Do not pool for the CI</span>
+        <div class="zh"><code>SE_unpooled = √(0.15×0.85/300 + 0.10×0.90/240) = 0.02828</code><br><code>CI = 0.05 ± 1.960 × 0.02828 = [−0.0054, 0.1054]</code>。含 0 → 與不拒絕一致。</div>
+        <div class="en"><code>SE_unpooled = √(0.15×0.85/300 + 0.10×0.90/240) = 0.02828</code><br><code>CI = 0.05 ± 1.960 × 0.02828 = [−0.0054, 0.1054]</code>. Contains 0 → consistent with not rejecting.</div></li>
+      <li><span class="lab">為什麼一個 pool 一個不 pool / Why the difference</span>
+        <div class="zh">檢定<b>假設</b> H₀ 成立（p₁ = p₂），所以可以合併估計共同比例；CI 在<b>估計差距</b>，不能先假設兩者相等。口訣：<b>檢定 pool，區間不 pool</b>（§17 與 §19 都提醒）。</div>
+        <div class="en">The test <b>assumes</b> H₀ (p₁ = p₂), so pooling is legitimate; a CI <b>estimates the gap</b> and cannot assume equality first. Rule: <b>pool for tests, not for intervals</b> (§17 and §19).</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>p̂_pool = 0.1278，z = 1.729，p = 0.0837 → <span class="norej">不拒絕</span>；95% CI = [−0.0054, 0.1054] 含 0。</span><span class="en"><b>Answer:</b> p̂_pool = 0.1278, z = 1.729, p = 0.0837 → <span class="norej">do not reject</span>; 95% CI = [−0.0054, 0.1054] includes 0.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q17 -->
+<section id="q17">
+  <div class="qtop"><span class="qn">Q17</span><span class="lv">§18 · A/B 測試樣本數</span><span class="tp">比例設計</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　現行轉換率 <code>p₁ = 0.20</code>，想偵測提升到 <code>p₂ = 0.23</code>。雙尾 <code>α = .05</code>，power <code>.80</code>。<br>(a) 每組需要多少人？(b) 若工程師說「流量不夠，每組只能放 1000 人」，這代表什麼？(c) 為什麼不能做到一半看到顯著就停？</div>
+    <div class="en"><b>Question.</b> Current conversion <code>p₁ = 0.20</code>; we want to detect an increase to <code>p₂ = 0.23</code>, two-tailed <code>α = .05</code>, power <code>.80</code>. (a) How many users per group? (b) If the engineer says "only 1000 per group is possible", what does that imply? (c) Why can't we stop early when it looks significant?</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">公式 / Formula</span>
+        <div class="fx"><span class="row">n = <span class="fr"><span class="n">[z<sub>α/2</sub>√(2p̄(1−p̄)) + z<sub>β</sub>√(p₁(1−p₁)+p₂(1−p₂))]²</span><span class="d">(p₂−p₁)²</span></span></span></div>
+        <div class="zh"><code>p̄ = 0.215</code>、<code>z₀.₀₂₅ = 1.960</code>、<code>z₀.₂₀ = 0.8416</code>。<br><code>n = 2942.59 → <b>2943 人/組</b></code>（無條件進位）。</div>
+        <div class="en"><code>p̄ = 0.215</code>, <code>z₀.₀₂₅ = 1.960</code>, <code>z₀.₂₀ = 0.8416</code>.<br><code>n = 2942.59 → <b>2943 per group</b></code> (round up).</div></li>
+      <li><span class="lab">樣本數不足的意義 / What under-powering means</span>
+        <div class="zh">每組 1000 只有原本的 1/3，SE 變成約 <code>√3 ≈ 1.7</code> 倍大，power 會遠低於 80%。<b>實驗就算「沒顯著」，也不能解讀成「新版沒有效果」</b>——只是這把尺不夠利。這正是 §06 的「不顯著 ≠ 沒效果」。</div>
+        <div class="en">1000 per group is one third of the requirement, so SE grows about <code>√3 ≈ 1.7</code> times and power falls well below 80%. <b>Even a non-significant result cannot be read as "no effect"</b>—ruler is not sharp enough. That is §06's "not significant ≠ no effect".</div></li>
+      <li><span class="lab">為什麼不能偷看 / Why no peeking</span>
+        <div class="zh">每天檢定一次就是做很多次檢定，每次 5% 誤報。看 14 天至少一次假陽性的機率是 <code>1 − 0.95¹⁴ ≈ 51%</code>。而且「一顯著就停」會系統性挑到高估效果的那一刻。<br>解法：<b>事先</b>算好 2943、事先定 α 與停止規則；若必須監控，改用序貫檢定或 alpha spending。</div>
+        <div class="en">Daily testing means many tests at 5% each; over 14 days the chance of at least one false positive is <code>1 − 0.95¹⁴ ≈ 51%</code>. Stopping at the first significant result also picks an inflated effect.<br>Fix: <b>pre-specify</b> 2943, α and the stopping rule; if monitoring is necessary, use sequential testing or alpha spending.</div></li>
+      <li><span class="lab">顯著還要看效果量 / Significance is not importance</span>
+        <div class="zh">3 個百分點的提升是否值得改版，要看每個轉換的價值與改版成本。<b>p 值回答「是不是 0」，不回答「夠不夠大」。</b></div>
+        <div class="en">Whether 3 points justifies the change depends on value per conversion and engineering cost. <b>A p-value answers "is it zero?", not "is it big enough?".</b></div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) 每組 2943 人；(b) 樣本不足 → power 低落，沒顯著也不能說沒效果；(c) 偷看 14 天假陽性率約 51%，應事先定樣本數與停止規則。</span><span class="en"><b>Answer:</b> (a) 2943 per group; (b) under-powered, so non-significance proves nothing; (c) 14 peeks give ~51% false-positive risk—fix sample size and stopping rule in advance.</span></div>
+  </div></details>
+</section>
+
+<!-- Q18 -->
+<section id="q18">
+  <div class="qtop"><span class="qn">Q18</span><span class="lv">§18 · 實務陷阱</span><span class="tp">診斷三種誤用</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　下列三個做法各犯什麼錯？該怎麼修正？<br>(a) 每天看一次 A/B 數據，p &lt; .05 就立刻上線。<br>(b) 同時比較 20 個指標，只報告其中 2 個顯著的，宣稱「全面改善」。<br>(c) 實驗結果 p = .0001，於是在報告裡寫「效果非常大，絕對值得全面上線」。</div>
+    <div class="en"><b>Question.</b> What is wrong with each practice, and how should it be fixed?<br>(a) Check the A/B data daily and launch as soon as p &lt; .05.<br>(b) Compare 20 metrics at once, report only the 2 significant ones and claim "broad improvement".<br>(c) The experiment gives p = .0001, so the report says "the effect is huge—definitely roll out everywhere".</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">(a) Peeking / Repeated testing</span>
+        <div class="zh">每天檢定讓實際 α 遠大於 5%；「一顯著就停」還會高估效果。<b>修正：</b>事先算樣本數、一次看到底；或改用序貫設計。</div>
+        <div class="en">Daily testing makes the real α far above 5%, and early stopping inflates the effect estimate. <b>Fix:</b> pre-compute sample size and look once, or use a sequential design.</div></li>
+      <li><span class="lab">(b) 多重比較 / Multiple comparisons</span>
+        <div class="zh">做 20 次 α=.05 的檢定，即使全部都沒效果，至少一次假陽性的機率是 <code>1 − 0.95²⁰ ≈ 64%</code>。<b>修正：</b>事先指定一個主要指標（primary metric）；若真的要檢很多個，用 Bonferroni 把門檻改成 <code>α/m = .05/20 = .0025</code>，或控制 FDR。</div>
+        <div class="en">Twenty tests at α=.05 give a <code>1 − 0.95²⁰ ≈ 64%</code> chance of at least one false positive even when nothing works. <b>Fix:</b> pre-specify one primary metric, or use Bonferroni (<code>α/m = .05/20 = .0025</code>) or FDR control.</div></li>
+      <li><span class="lab">(c) 顯著 ≠ 很大 / Significant ≠ large</span>
+        <div class="zh">p 值衡量的是「資料與 H₀ 的不一致程度」，<b>不是效果大小</b>。樣本很大時，極小的效果也能得到 p = .0001。<b>修正：</b>一定要報告效果量與信賴區間，例如「轉換率 +0.4 個百分點，95% CI [0.2, 0.6]」，再和成本比較。</div>
+        <div class="en">A p-value measures incompatibility with H₀, <b>not effect size</b>. With huge n even a tiny effect yields p = .0001. <b>Fix:</b> always report the effect and its CI, e.g. "+0.4 percentage points, 95% CI [0.2, 0.6]", then compare with cost.</div></li>
+      <li><span class="lab">三者共同的根源 / The common root</span>
+        <div class="zh">三個錯誤都是<b>讓資料主導規則</b>：偷看是讓資料決定何時停，多重比較是讓資料決定看哪個指標，把 p 當效果量是讓資料替你做商業判斷。§15 的十步流程就是為了擋住這些。</div>
+        <div class="en">All three let the data dictate the rules: peeking lets data decide when to stop, multiple comparisons let data decide which metric counts, and treating p as effect size lets data make the business call. The §15 ten-step procedure exists to block exactly these.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) peeking → 事先定樣本數；(b) 多重比較 → 主要指標或 Bonferroni α=.0025；(c) p 值不是效果量 → 必須報效果量與 CI。</span><span class="en"><b>Answer:</b> (a) peeking → pre-set n; (b) multiplicity → primary metric or Bonferroni α=.0025; (c) p ≠ effect size → always report effect and CI.</span></div>
+  </div></details>
+</section>
+
+<!-- Q19 -->
+<section id="q19">
+  <div class="qtop"><span class="qn">Q19</span><span class="lv">§19 · 公式總表</span><span class="tp">選公式與臨界值</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　默寫與應用：完成下表（只需寫公式代號與數值，不必完整檢定）。<br>(a) 寫出 <code>α = .10 / .05 / .01</code> 對應的雙尾 <code>z<sub>α/2</sub></code> 與右尾 <code>z<sub>α</sub></code>。<br>(b) 五種情境各用哪個統計量：①單一均值 σ 已知 ②單一均值 σ 未知 ③單一變異數 ④兩均值差 σ 已知 ⑤兩比例差。<br>(c) 情境：<code>n=15</code>、<code>s=9</code>、<code>σ₀=10</code>，做變異數雙尾檢定。寫出 U、df 與兩個臨界值，並判決。</div>
+    <div class="en"><b>Question.</b> Recall and apply: (a) give the two-tailed <code>z<sub>α/2</sub></code> and upper-tail <code>z<sub>α</sub></code> for <code>α = .10 / .05 / .01</code>. (b) Name the statistic for five cases: ①one mean, σ known ②one mean, σ unknown ③one variance ④difference of two means, σ known ⑤difference of two proportions. (c) For <code>n=15</code>, <code>s=9</code>, <code>σ₀=10</code>, run a two-tailed variance test: give U, df, both critical values and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">(a) 常用臨界值 / Common critical values</span>
+        <div class="zh"><code>α=.10</code>：雙尾 1.645，右尾 1.282；<code>α=.05</code>：雙尾 1.960，右尾 1.645；<code>α=.01</code>：雙尾 2.576，右尾 2.326。<br>左尾就是右尾加負號（−1.282 / −1.645 / −2.326）。</div>
+        <div class="en"><code>α=.10</code>: two-tailed 1.645, upper 1.282; <code>α=.05</code>: 1.960 / 1.645; <code>α=.01</code>: 2.576 / 2.326.<br>Lower-tail values are just negatives (−1.282 / −1.645 / −2.326).</div></li>
+      <li><span class="lab">(b) 五種統計量 / Five statistics</span>
+        <div class="zh">① <code>z=(x̄−μ₀)/(σ/√n) ~ N(0,1)</code>；② <code>t=(x̄−μ₀)/(s/√n) ~ t(n−1)</code>；③ <code>U=(n−1)s²/σ₀² ~ χ²(n−1)</code>；④ <code>z=(x̄₁−x̄₂−D₀)/√(σ₁²/n₁+σ₂²/n₂)</code>；⑤ <code>z=(p̂₁−p̂₂)/√(p̂_pool(1−p̂_pool)(1/n₁+1/n₂))</code>（檢定才 pool）。</div>
+        <div class="en">① <code>z=(x̄−μ₀)/(σ/√n) ~ N(0,1)</code>; ② <code>t=(x̄−μ₀)/(s/√n) ~ t(n−1)</code>; ③ <code>U=(n−1)s²/σ₀² ~ χ²(n−1)</code>; ④ <code>z=(x̄₁−x̄₂−D₀)/√(σ₁²/n₁+σ₂²/n₂)</code>; ⑤ <code>z=(p̂₁−p̂₂)/√(p̂_pool(1−p̂_pool)(1/n₁+1/n₂))</code> (pool for tests only).</div></li>
+      <li><span class="lab">(c) 實際算 / Compute</span>
+        <div class="zh"><code>U = 14 × 81/100 = 11.34</code>，<code>df = 14</code>。<br>雙尾 α=.05：<code>χ²₀.₀₂₅,₁₄ = 5.629</code>、<code>χ²₀.₉₇₅,₁₄ = 26.119</code>。<br><code>5.629 &lt; 11.34 &lt; 26.119</code> → 落在不拒絕域 → <span class="norej">不拒絕 H₀</span>。沒有證據說標準差偏離 10。</div>
+        <div class="en"><code>U = 14 × 81/100 = 11.34</code>, <code>df = 14</code>.<br>Two-tailed α=.05: <code>χ²₀.₀₂₅,₁₄ = 5.629</code>, <code>χ²₀.₉₇₅,₁₄ = 26.119</code>.<br>Since <code>5.629 &lt; 11.34 &lt; 26.119</code>, it lies in the non-rejection region → <span class="norej">do not reject H₀</span>. No evidence the standard deviation differs from 10.</div></li>
+      <li><span class="lab">順便複習五大失分點 / The five marks-losing habits</span>
+        <div class="zh">① 把「不拒絕」寫成「證明沒差」；② 雙尾 p 值忘了乘 2；③ χ² 雙尾用對稱臨界值；④ 兩母體分母忘記先平方；⑤ 選錯尾巴還硬算。<b>這五條正是前面 20 題反覆在練的東西。</b></div>
+        <div class="en">① Writing "fail to reject" as "proved no difference"; ② forgetting to double p for two tails; ③ using symmetric bounds for χ²; ④ forgetting to square before dividing for two samples; ⑤ using the wrong tail anyway. <b>These five are exactly what the previous 20 problems kept drilling.</b></div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) 1.645/1.282、1.960/1.645、2.576/2.326；(b) Z、t、χ²、兩均值 Z、兩比例 Z；(c) U=11.34，df=14，界 5.629 與 26.119 → <span class="norej">不拒絕</span>。</span><span class="en"><b>Answer:</b> (a) 1.645/1.282, 1.960/1.645, 2.576/2.326; (b) Z, t, χ², two-mean Z, two-proportion Z; (c) U=11.34, df=14, bounds 5.629 / 26.119 → <span class="norej">do not reject</span>.</span></div>
+  </div></details>
+</section>
+
+<!-- Q20 -->
+<section id="q20">
+  <div class="qtop"><span class="qn">Q20</span><span class="lv">§19 · 全課綜合</span><span class="tp">從假設到決策</span></div>
+  <div class="qtext">
+    <div class="zh"><b>題目</b>　某校全體平均考試分數為 <code>70</code>。老師想檢查新教法是否<b>提高</b>平均分。<code>σ</code> 未知。先做一個小型先導研究：<code>n = 25</code>、<code>x̄ = 74</code>、<code>s = 10</code>，<code>α = .05</code>。<br>(a) 寫 H₀、Ha 並指出尾巴。(b) 算 t 與判決。(c) 若正式實驗想在 <code>δ = 5</code>、<code>σ = 10</code>、<code>power = .90</code>、<code>α = .05</code> 右尾下進行，需要多少人？(d) 助理說「先導研究已經顯著了，正式實驗不用做」。這句話有兩個問題，是什麼？</div>
+    <div class="en"><b>Question.</b> A school-wide mean score is <code>70</code>. A teacher wants to know whether a new method <b>raises</b> the mean; σ is unknown. A pilot gives <code>n = 25</code>, <code>x̄ = 74</code>, <code>s = 10</code>, at <code>α = .05</code>. (a) State H₀, Ha and the tail. (b) Compute t and decide. (c) For the full study with <code>δ = 5</code>, <code>σ = 10</code>, <code>power = .90</code>, <code>α = .05</code> upper-tailed, what n is needed? (d) The assistant says "the pilot was already significant, so skip the full study". Identify two problems.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <ol class="steps">
+      <li><span class="lab">(a) 假設 / Hypotheses</span>
+        <div class="zh"><code>H₀: μ = 70</code> vs <code>Ha: μ &gt; 70</code>，右尾；σ 未知 → t，<code>df = 24</code>。</div>
+        <div class="en"><code>H₀: μ = 70</code> vs <code>Ha: μ &gt; 70</code>, upper tail; σ unknown → t with <code>df = 24</code>.</div></li>
+      <li><span class="lab">(b) 先導研究檢定 / Pilot test</span>
+        <div class="zh"><code>SE = 10/√25 = 2</code>；<code>t = (74−70)/2 = 2.00</code>。<code>t₀.₀₅,₂₄ = 1.711</code>，<code>2.00 &gt; 1.711</code> → <span class="rej">拒絕</span>；<code>p = P(t₂₄ &gt; 2.00) = 0.0285</code>。</div>
+        <div class="en"><code>SE = 10/√25 = 2</code>; <code>t = (74−70)/2 = 2.00</code>. <code>t₀.₀₅,₂₄ = 1.711</code>, <code>2.00 &gt; 1.711</code> → <span class="rej">reject</span>; <code>p = P(t₂₄ &gt; 2.00) = 0.0285</code>.</div></li>
+      <li><span class="lab">(c) 正式樣本數 / Full sample size</span>
+        <div class="zh"><code>n = ((1.644854 + 1.281552) × 10/5)² = 34.255 → 35 人</code>。先導研究 25 人對 power = .90 而言是不夠的。</div>
+        <div class="en"><code>n = ((1.644854 + 1.281552) × 10/5)² = 34.255 → 35 students</code>. The pilot's 25 is underpowered relative to the .90 goal.</div></li>
+      <li><span class="lab">(d) 兩個問題 / Two problems</span>
+        <div class="zh">① <b>先導研究樣本太小</b>：即使 p = .0285，它的 power 不足以穩定估計效果，而且小樣本容易碰到「贏者詛咒」——剛好顯著時，效果量往往被高估。<br>② <b>用 先導研究的結果決定要不要做正式實驗，是事後決策</b>：等於讓資料決定樣本數與是否繼續，違反 §15 第 6 步「先定 n」與第 1 步「先定問題」。正規做法是先算好 35 人，按計畫做完再判決。</div>
+        <div class="en">① <b>The pilot is underpowered</b>: even with p = .0285 it cannot estimate the effect stably, and a barely-significant small study tends to overstate the effect ("winner's curse").<br>② <b>Deciding whether to run the full study based on the pilot is a post-hoc decision</b>: it lets data determine n and continuation, violating §15 step 6 (fix n first) and step 1. The proper route is to commit to 35 and finish the plan.</div></li>
+      <li><span class="lab">整冊收尾 / Closing the whole set</span>
+        <div class="zh">從 Q1 的反證法到這裡的「資料不能主導規則」，貫穿 19 章的主軸只有一句：<b>先把問題、假設、α、樣本數寫死，再讓資料說話</b>。α 是你事先接受的誤判率，power 是抓到真相的能力，而樣本數是唯一能同時改善兩者的槓桿。</div>
+        <div class="en">From Q1's proof-by-contradiction to this warning about letting data dictate rules, one thread runs through all 19 sections: <b>fix the question, hypotheses, α and sample size first, then let the data speak</b>. α is the false-alarm rate you pre-accept, power is your ability to catch what is real, and sample size is the only lever that improves both.</div></li>
+    </ol>
+    <div class="ans"><span class="zh"><b>答案：</b>(a) Ha: μ&gt;70 右尾；(b) t = 2.00 &gt; 1.711，p = 0.0285 → <span class="rej">拒絕</span>；(c) n = 35；(d) 先導研究太小且效果易高估，並用事後結果決定是否繼續，違反事前設計。</span><span class="en"><b>Answer:</b> (a) Ha: μ&gt;70, upper tail; (b) t = 2.00 &gt; 1.711, p = 0.0285 → <span class="rej">reject</span>; (c) n = 35; (d) the pilot is small and inflates effects, and using it to decide continuation violates pre-specification.</span></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- summary -->
+<section id="summary">
+  <div class="qtop"><span class="qn">✓</span><span class="lv">答案一覽 / Answer key</span></div>
+  <div class="tw">
+  <table>
+    <thead><tr><th class="c">題</th><th>章節</th><th>核心答案 / Key result</th></tr></thead>
+    <tbody>
+      <tr><td class="c mono">Q1</td><td>§01–02</td><td>P(X≥8)=0.1280 &gt; .05 → 不拒絕；不拒絕≠證明合格</td></tr>
+      <tr><td class="c mono">Q2</td><td>§03</td><td>(a)(b) 左尾；(c)(d) 雙尾；(e) 右尾</td></tr>
+      <tr><td class="c mono">Q3</td><td>§04</td><td>z=1.90：單尾拒絕(p=.0287)，雙尾不拒絕(p=.0574)</td></tr>
+      <tr><td class="c mono">Q4</td><td>§05</td><td>3 + 8 = 11 次；α=.01 後變成 0.6+14=14.6 次</td></tr>
+      <tr><td class="c mono">Q5</td><td>§06</td><td>p=.0672；α=.05 不拒絕，α=.10 拒絕；事後挑 α 是作弊</td></tr>
+      <tr><td class="c mono">Q6</td><td>§07</td><td>z=2.25 &lt; 2.326 → 不拒絕；c=84.6527</td></tr>
+      <tr><td class="c mono">Q7</td><td>§08</td><td>右尾 p=.01222 不拒絕；雙尾 p=.0244 拒絕</td></tr>
+      <tr><td class="c mono">Q8</td><td>§09</td><td>三種都不拒絕，但理由各不同（差一點／方向反／門檻嚴）</td></tr>
+      <tr><td class="c mono">Q9</td><td>§10</td><td>c=53.2897，β=.3612，power=.6388</td></tr>
+      <tr><td class="c mono">Q10</td><td>§11</td><td>n=34.255 → 35</td></tr>
+      <tr><td class="c mono">Q11</td><td>§12</td><td>z=2.828，p=.00468 → 拒絕；CI [203.07, 216.93]</td></tr>
+      <tr><td class="c mono">Q12</td><td>§13</td><td>t=2.525，df=19，p=.0103 → 拒絕；CI [75.60, 81.40]</td></tr>
+      <tr><td class="c mono">Q13</td><td>§14</td><td>U=43.74，界 12.401/39.364，p=.0164 → 拒絕</td></tr>
+      <tr><td class="c mono">Q14</td><td>§15</td><td>D→B→H→E→J→G→A→F→I→C；先看資料違反第 1 步</td></tr>
+      <tr><td class="c mono">Q15</td><td>§16</td><td>SE=2.0976，Z=2.860，p=.00423 → 拒絕</td></tr>
+      <tr><td class="c mono">Q16</td><td>§17</td><td>p̂_pool=.1278，z=1.729，p=.0837 → 不拒絕；CI 含 0</td></tr>
+      <tr><td class="c mono">Q17</td><td>§18</td><td>n=2943/組；偷看 14 天假陽性約 51%</td></tr>
+      <tr><td class="c mono">Q18</td><td>§18</td><td>peeking／多重比較 Bonferroni .0025／p 不是效果量</td></tr>
+      <tr><td class="c mono">Q19</td><td>§19</td><td>臨界值表、五個統計量、U=11.34 介於 5.629 與 26.119 → 不拒絕</td></tr>
+      <tr><td class="c mono">Q20</td><td>§19</td><td>t=2.00 → 拒絕；n=35；先導研究太小且事後決策違反事前設計</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip">
+    <span class="h">兩冊一起用 / Using both sets</span>
+    <div class="zh">第一冊按難度練計算，第二冊按章節驗收覆蓋。若第二冊某題卡住，看側欄的 <code>§0x</code> 回到主講義對應章節；若想再練同類型，到第一冊找相同知識點的題。</div>
+    <div class="en">Set 1 drills computation by difficulty; Set 2 checks coverage section by section. If a Set 2 problem stops you, use its <code>§0x</code> tag to return to that section in the notes—or find the same topic in Set 1 for more practice.</div>
+  </div>
+  <div class="note" style="margin-top:22px">
+    <span class="h">回到其他頁面 / Navigation</span>
+    <a href="index.html">← 雙語精讀（19 章）/ Bilingual notes</a>　·　<a href="exercises.html">第一冊 20 題 / Set 1</a>
+  </div>
+</section>
+
+</main>
+</div>
+
+<button class="menubtn" id="menubtn">☰</button>
+
+<script>
+document.querySelectorAll('.toggle button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.toggle button').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');
+    document.body.className='lang-'+b.dataset.lang;
+  });
+});
+document.getElementById('expandAll').addEventListener('click',function(){
+  document.querySelectorAll('details.sol').forEach(function(d){d.open=true});
+});
+document.getElementById('collapseAll').addEventListener('click',function(){
+  document.querySelectorAll('details.sol').forEach(function(d){d.open=false});
+});
+document.getElementById('menubtn').addEventListener('click',function(){
+  document.getElementById('sb').classList.toggle('open');
+});
+document.querySelectorAll('#toc a').forEach(function(a){
+  a.addEventListener('click',function(){document.getElementById('sb').classList.remove('open')});
+});
+var links=[].slice.call(document.querySelectorAll('#toc a'));
+var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+function upd(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  document.getElementById('pfill').style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+  var y=h.scrollTop+140, act=0;
+  for(var i=0;i<secs.length;i++){
+    if(secs[i].getBoundingClientRect().top+h.scrollTop<=y) act=i;
+  }
+  links.forEach(function(a,i){a.classList.toggle('active',i===act)});
+}
+window.addEventListener('scroll',upd,{passive:true});
+window.addEventListener('resize',upd);
+upd();
+</script>
+</body>
+</html>
