@@ -3,9 +3,17 @@
 **UFUG2104 Applied Statistics · Chapter 7: Hypothesis Testing**
 繁體中文 × English 對照，為自學而寫的單檔互動講義。
 
-> 線上閱讀：**https://jeng-linli.github.io/hypothesis-testing-notes/**
+> 線上講義：**https://jeng-linli.github.io/hypothesis-testing-notes/**
+> 20 題演練：**https://jeng-linli.github.io/hypothesis-testing-notes/exercises.html**
 
 ---
+
+## 兩個檔案
+
+| 檔案 | 內容 |
+|:--|:--|
+| `index.html` | 主講義，19 章，逐知識點講解＋例題 |
+| `exercises.html` | **20 題演練**，由簡至難，每題詳解可折疊 |
 
 ## 這份講義是什麼
 
@@ -29,6 +37,17 @@
 | 09 | 檢定力 power | | |
 
 19 章、21 組例題、9 張對照表。
+
+## 20 題演練
+
+`exercises.html` 是獨立的練習冊，難度四級遞進：
+
+- **基礎（Q1–Q4）** — 寫 H₀/Ha、判斷尾巴、型一型二錯誤、信賴區間與檢定的等價性
+- **中階（Q5–Q11）** — Z 檢定（單尾／雙尾／左尾）、α 門檻、臨界值換算、t 檢定、Z 與 t 的選擇
+- **進階（Q12–Q18）** — β 與 power、樣本數設計、α 的代價、χ² 右尾與雙尾、兩母體均值與比例
+- **綜合（Q19–Q20）** — A/B 測試全流程（含 peeking 問題）、錯誤診斷
+
+每題詳解**預設折疊**，可以先自己算再打開核對。附答案一覽表與考前 60 秒檢查清單。所有統計量、臨界值、p 值、power 與樣本數均以 scipy 重新核算。
 
 ## 三種語言模式
 
