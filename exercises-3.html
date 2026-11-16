@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20 題 · 計算專場 — Calculation Drill</title>
+<style>
+:root{
+  --bg:#0b0f14; --panel:#121821; --panel2:#18202b; --panel3:#1e2836;
+  --line:#243040; --line2:#2e3c4f;
+  --tx:#e8eef6; --tx2:#a8b8c8; --tx3:#6f8194;
+  --blue:#5aa9ff; --blue-d:#1d3a5c;
+  --amber:#f0b542; --amber-d:#3a2d12;
+  --red:#ff6b6b; --red-d:#3d1b1b;
+  --green:#3fb950; --green-d:#16301c;
+  --purple:#b98cff; --purple-d:#2a1f3d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--tx);
+  font-family:"Inter","Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+.app{display:flex; min-height:100vh}
+
+/* sidebar */
+.sidebar{
+  width:280px; flex:0 0 280px; position:sticky; top:0; height:100vh;
+  border-right:1px solid var(--line); background:linear-gradient(180deg,#0e131a,#0b0f14);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.brand{padding:20px 20px 14px; border-bottom:1px solid var(--line)}
+.brand .k{font-size:11px; letter-spacing:.16em; color:var(--tx3); text-transform:uppercase}
+.brand h1{font-size:17px; margin:6px 0 2px; font-weight:650; letter-spacing:.02em}
+.brand .sub{font-size:12px; color:var(--tx3)}
+.back{display:block; margin-top:10px; font-size:11.5px; color:var(--blue); text-decoration:none}
+.back:hover{text-decoration:underline}
+.toggle{display:flex; gap:6px; padding:14px 20px; border-bottom:1px solid var(--line)}
+.toggle button{
+  flex:1; padding:6px 4px; font-size:12px; border-radius:7px; cursor:pointer;
+  background:var(--panel2); color:var(--tx2); border:1px solid var(--line2);
+  font-family:inherit; transition:.15s;
+}
+.toggle button:hover{color:var(--tx); border-color:#3d5a7a}
+.toggle button.on{background:var(--blue); color:#04121f; border-color:var(--blue); font-weight:650}
+nav{flex:1; overflow-y:auto; padding:10px 10px 30px}
+nav .grp{font-size:10.5px; letter-spacing:.12em; color:var(--tx3); text-transform:uppercase; padding:13px 10px 4px}
+nav a{
+  display:flex; gap:9px; align-items:baseline; padding:5px 10px; margin:1px 0;
+  color:var(--tx2); text-decoration:none; font-size:12.8px; border-radius:6px;
+  border-left:2px solid transparent; transition:.12s;
+}
+nav a .num{font-size:10.5px; color:var(--tx3); font-variant-numeric:tabular-nums; min-width:20px}
+nav a:hover{background:var(--panel2); color:var(--tx)}
+nav a.active{background:var(--blue-d); color:#cfe6ff; border-left-color:var(--blue)}
+nav a.active .num{color:var(--blue)}
+nav a .d{font-size:9px; color:var(--amber); letter-spacing:-1px; margin-left:auto}
+.navfoot{padding:10px 20px 16px; border-top:1px solid var(--line); font-size:11.5px; color:var(--tx3)}
+.pbar{height:3px; background:#1a222d; border-radius:2px; margin-top:7px; overflow:hidden}
+.pbar i{display:block; height:100%; width:0; background:linear-gradient(90deg,#5aa9ff,#b98cff); transition:width .1s}
+
+/* main */
+main{flex:1; min-width:0; padding:0 clamp(18px,4vw,56px) 120px; max-width:1080px; margin:0 auto}
+.hero{padding:56px 0 30px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.hero .eyebrow{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:12px}
+.hero h1{font-size:clamp(26px,3.6vw,40px); line-height:1.2; margin:0 0 6px; font-weight:680; letter-spacing:-.01em}
+.hero h2{font-size:clamp(15px,1.6vw,18px); font-weight:400; color:var(--tx2); margin:0 0 18px}
+.hero p{max-width:72ch; color:var(--tx2); font-size:14.5px}
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px}
+.chip{font-size:11.5px; padding:4px 10px; border:1px solid var(--line2); border-radius:20px; color:var(--tx2); background:var(--panel)}
+.toolbar{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 0}
+.toolbar button{
+  font-family:inherit; font-size:12px; padding:6px 13px; border-radius:7px; cursor:pointer;
+  background:var(--panel2); color:var(--tx2); border:1px solid var(--line2);
+}
+.toolbar button:hover{color:var(--tx); border-color:var(--blue)}
+
+section{padding:40px 0 8px; border-bottom:1px solid var(--line); position:relative}
+section:last-of-type{border:none}
+.qtop{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+.qtop .qn{
+  font-family:"JetBrains Mono",Consolas,monospace; font-size:13px; font-weight:700;
+  background:var(--blue-d); border:1px solid #2f5b87; color:#9ecbff;
+  padding:3px 10px; border-radius:6px;
+}
+.qtop .lv{font-size:11px; letter-spacing:.05em; color:var(--amber)}
+.qtop .tp{font-size:11.5px; padding:3px 9px; border:1px solid var(--line2); border-radius:5px; color:var(--tx2); background:var(--panel)}
+.qtext{background:var(--panel); border:1px solid var(--line2); border-radius:10px; padding:16px 18px 6px}
+.qtext::before{
+  content:""; display:block; width:3px; height:16px; background:var(--purple);
+  border-radius:2px; margin-bottom:8px;
+}
+
+p{margin:10px 0}
+.zh{display:block}
+.en{display:block; color:var(--tx2); font-size:14.5px; line-height:1.7}
+.en b, .en strong{color:#cfe0f0; font-weight:600}
+body.lang-zh .en{display:none}
+body.lang-en .zh{display:none}
+body.lang-en .en{color:var(--tx); font-size:15px}
+b, strong{color:#fff; font-weight:640}
+em{color:var(--amber); font-style:normal}
+code{
+  font-family:"JetBrains Mono","Cascadia Code",Consolas,monospace; font-size:.88em;
+  background:var(--panel3); padding:1px 6px; border-radius:4px; color:#a8d8ff; border:1px solid var(--line2);
+}
+a{color:var(--blue)}
+ul, ol{margin:10px 0; padding-left:22px}
+li{margin:5px 0}
+li::marker{color:var(--tx3)}
+
+.fx{
+  background:var(--panel2); border:1px solid var(--line2); border-left:3px solid var(--blue);
+  border-radius:8px; padding:13px 16px; margin:14px 0; overflow-x:auto;
+  font-family:"Cambria Math","Latin Modern Math",Cambria,"Times New Roman",serif; font-size:17px;
+}
+.fx .lbl{display:block; font-family:"Inter","Segoe UI",sans-serif; font-size:11px; letter-spacing:.12em; color:var(--tx3); text-transform:uppercase; margin-bottom:8px}
+.fx .row{display:block; margin:5px 0; white-space:nowrap}
+.fx .row.p{white-space:normal}
+.fr{display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 .3em; line-height:1.2; font-size:.94em}
+.fr .n{border-bottom:1.4px solid currentColor; padding:0 .35em .1em; display:block}
+.fr .d{padding:.1em .35em 0; display:block}
+.sm{font-size:.82em}
+
+.note, .warn, .tip, .key{
+  border:1px solid var(--line2); border-radius:9px; padding:13px 16px; margin:16px 0;
+  background:var(--panel); font-size:14.3px;
+}
+.note{border-left:3px solid var(--blue)}
+.warn{border-left:3px solid var(--red); background:linear-gradient(90deg,var(--red-d),var(--panel) 60%)}
+.tip{border-left:3px solid var(--green); background:linear-gradient(90deg,var(--green-d),var(--panel) 60%)}
+.key{border-left:3px solid var(--amber); background:linear-gradient(90deg,var(--amber-d),var(--panel) 60%)}
+.note .h, .warn .h, .tip .h, .key .h{
+  display:block; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+  font-weight:650; margin-bottom:6px; color:var(--tx3);
+}
+.warn .h{color:#ff9b9b} .tip .h{color:#6ee787} .key .h{color:var(--amber)} .note .h{color:#8cc8ff}
+
+/* solution */
+details.sol{
+  margin:16px 0 4px; border:1px solid #24522f; border-radius:10px;
+  background:linear-gradient(180deg,#101a15,#0f151d); overflow:hidden;
+}
+details.sol>summary{
+  cursor:pointer; list-style:none; padding:11px 16px; font-size:13px; font-weight:640;
+  color:#8ee89a; background:var(--green-d); border-bottom:1px solid transparent;
+  display:flex; align-items:center; gap:9px; user-select:none;
+}
+details.sol>summary::-webkit-details-marker{display:none}
+details.sol>summary::before{content:"▸"; font-size:14px; transition:transform .15s}
+details.sol[open]>summary::before{transform:rotate(90deg)}
+details.sol[open]>summary{border-bottom-color:#24522f}
+details.sol .solbody{padding:6px 16px 18px}
+.steps{list-style:none; padding:0; margin:12px 0; counter-reset:st}
+.steps>li{
+  position:relative; padding:10px 0 10px 44px; border-top:1px dashed var(--line2);
+  counter-increment:st; margin:0;
+}
+.steps>li:first-child{border-top:none}
+.steps>li::before{
+  content:counter(st); position:absolute; left:0; top:11px;
+  width:26px; height:26px; border-radius:7px; background:var(--blue-d); border:1px solid #2f5b87;
+  color:#9ecbff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  font-variant-numeric:tabular-nums;
+}
+.steps>li>.lab{font-size:12px; color:var(--tx3); letter-spacing:.05em; display:block; margin-bottom:2px}
+.ans{
+  margin-top:14px; padding:12px 14px; border-radius:8px;
+  background:var(--green-d); border:1px solid #24522f; font-size:14.2px;
+}
+.ans b{color:#8ee89a}
+.rej{color:var(--red); font-weight:700}
+.norej{color:var(--green); font-weight:700}
+
+.tw{overflow-x:auto; margin:16px 0; border:1px solid var(--line2); border-radius:9px}
+table{border-collapse:collapse; width:100%; font-size:13.4px; min-width:520px}
+th, td{padding:8px 11px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{background:var(--panel3); font-size:12px; letter-spacing:.05em; color:var(--tx2); font-weight:640; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#151d27}
+td.c, th.c{text-align:center}
+.mono{font-family:"JetBrains Mono",Consolas,monospace; font-size:12.5px}
+
+@media(max-width:820px){
+  .sidebar{position:fixed; left:-280px; z-index:50; transition:.2s}
+  .sidebar.open{left:0; box-shadow:0 0 40px #000}
+  main{max-width:100%}
+  .menubtn{display:flex !important}
+  .fx{overflow-x:auto}
+}
+.menubtn{
+  display:none; position:fixed; bottom:18px; right:18px; z-index:60;
+  width:48px; height:48px; border-radius:50%; background:var(--blue); color:#04121f;
+  border:none; font-size:20px; align-items:center; justify-content:center; cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);
+}
+hr{border:none; border-top:1px solid var(--line); margin:30px 0}
+::selection{background:#2a5c8f; color:#fff}
+::-webkit-scrollbar{width:9px; height:9px}
+::-webkit-scrollbar-track{background:#0b0f14}
+::-webkit-scrollbar-thumb{background:#2a3748; border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:#3a4b60}
+</style>
+</head>
+<body class="lang-both">
+<div class="app">
+<aside class="sidebar" id="sb">
+  <div class="brand">
+    <div class="k">UFUG2104 · Applied Statistics</div>
+    <h1>20 題 · 計算專場</h1>
+    <div class="sub">Calculation Drill · 雙語</div>
+    <a class="back" href="exercises-2.html">← 回第二冊 / Set 2</a>
+    <a class="back" href="exercises.html">← 回第一冊 / Set 1</a>
+    <a class="back" href="index.html">← 回雙語講義 / Notes</a>
+  </div>
+  <div class="toggle">
+    <button data-lang="both" class="on">雙語</button>
+    <button data-lang="zh">繁中</button>
+    <button data-lang="en">EN</button>
+  </div>
+  <nav id="toc">
+    <div class="grp">Z 檢定 · Q1–Q5</div>
+    <a href="#q1"><span class="num">Q1</span><span class="t">Z 右尾</span><span class="d">★</span></a>
+    <a href="#q2"><span class="num">Q2</span><span class="t">Z 左尾</span><span class="d">★</span></a>
+    <a href="#q3"><span class="num">Q3</span><span class="t">Z 雙尾</span><span class="d">★</span></a>
+    <a href="#q4"><span class="num">Q4</span><span class="t">求臨界值 c</span><span class="d">★</span></a>
+    <a href="#q5"><span class="num">Q5</span><span class="t">反查 z</span><span class="d">★</span></a>
+    <div class="grp">t 與 χ² · Q6–Q10</div>
+    <a href="#q6"><span class="num">Q6</span><span class="t">t 右尾</span><span class="d">★★</span></a>
+    <a href="#q7"><span class="num">Q7</span><span class="t">t 雙尾</span><span class="d">★★</span></a>
+    <a href="#q8"><span class="num">Q8</span><span class="t">t 信賴區間</span><span class="d">★★</span></a>
+    <a href="#q9"><span class="num">Q9</span><span class="t">χ² 右尾</span><span class="d">★★</span></a>
+    <a href="#q10"><span class="num">Q10</span><span class="t">χ² 雙尾</span><span class="d">★★</span></a>
+    <div class="grp">power 與樣本數 · Q11–Q13</div>
+    <a href="#q11"><span class="num">Q11</span><span class="t">算 β 與 power</span><span class="d">★★★</span></a>
+    <a href="#q12"><span class="num">Q12</span><span class="t">樣本數 α=.05</span><span class="d">★★★</span></a>
+    <a href="#q13"><span class="num">Q13</span><span class="t">樣本數 α=.01</span><span class="d">★★★</span></a>
+    <div class="grp">兩母體 · Q14–Q16</div>
+    <a href="#q14"><span class="num">Q14</span><span class="t">兩均值差</span><span class="d">★★★</span></a>
+    <a href="#q15"><span class="num">Q15</span><span class="t">兩比例差（檢定）</span><span class="d">★★★</span></a>
+    <a href="#q16"><span class="num">Q16</span><span class="t">兩比例差（CI）</span><span class="d">★★★</span></a>
+    <div class="grp">比例、二項與綜合 · Q17–Q20</div>
+    <a href="#q17"><span class="num">Q17</span><span class="t">二項精確機率</span><span class="d">★★</span></a>
+    <a href="#q18"><span class="num">Q18</span><span class="t">單一比例 Z</span><span class="d">★★</span></a>
+    <a href="#q19"><span class="num">Q19</span><span class="t">A/B 樣本數</span><span class="d">★★★★</span></a>
+    <a href="#q20"><span class="num">Q20</span><span class="t">混合大題</span><span class="d">★★★★</span></a>
+    <a href="#summary"><span class="num">✓</span><span class="t">答案一覽</span><span class="d"></span></a>
+  </nav>
+  <div class="navfoot"><span class="zh">閱讀進度</span><span class="en">Reading progress</span>
+    <div class="pbar"><i id="pfill"></i></div>
+  </div>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">UFUG2104 · Applied Statistics · Calculation Drill</div>
+  <h1>計算專場：20 題，算到熟</h1>
+  <h2>Calculation Drill: 20 Problems, Nothing but Numbers</h2>
+  <p class="zh">前兩冊重觀念，這一冊只練手。每題都是「給數字 → 算統計量 → 下判決」，詳解壓縮成代入與答案兩三行。建議計時：每題 3 分鐘，卡住就先看答案，把卡住的那一步抄在紙上。</p>
+  <p class="en">Sets 1 and 2 focused on concepts; this one is pure muscle memory. Every item is "given numbers → compute the statistic → decide". Solutions are compressed to substitution and answer. Time yourself: three minutes per problem; if stuck, peek at the answer and write down the step that stopped you.</p>
+  <div class="meta">
+    <span class="chip">20 題 / 20 problems</span>
+    <span class="chip">純計算 / computation only</span>
+    <span class="chip">繁中 × English</span>
+    <span class="chip">建議 3 分鐘/題</span>
+  </div>
+  <div class="toolbar">
+    <button id="expandAll">展開全部詳解 / Expand all</button>
+    <button id="collapseAll">收合全部 / Collapse all</button>
+  </div>
+</header>
+
+<div class="note">
+  <span class="h">使用方式 / How to use</span>
+  <div class="zh">先不要點開詳解。拿一張紙寫下四行：<b>SE → 統計量 → 臨界值或 p → 判決</b>。四行都寫完才對答案。統計量用 scipy 重算過，四捨五入到小數四位。</div>
+  <div class="en">Do not open the solution first. On paper write four lines: <b>SE → statistic → critical value or p → decision</b>. Check only after all four are done. All statistics were recomputed with scipy and rounded to four decimals.</div>
+</div>
+
+<!-- Q1 -->
+<section id="q1">
+  <div class="qtop"><span class="qn">Q1</span><span class="lv">★</span><span class="tp">Z · 右尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>μ₀=60, σ=9, n=36, x̄=63</code>。在 <code>α=.05</code> 右尾檢定 <code>Ha: μ&gt;60</code>。求 SE、z、p 值與判決。</div>
+    <div class="en"><code>μ₀=60, σ=9, n=36, x̄=63</code>. Test <code>Ha: μ&gt;60</code> at <code>α=.05</code> (upper tail). Find SE, z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 9/√36 = 1.5</code>；<code>z = (63−60)/1.5 = 2.000</code>；<code>p = 1−Φ(2) = 0.0228</code>；<code>z₀.₀₅=1.645</code>。</div>
+    <div class="en"><code>SE = 9/√36 = 1.5</code>; <code>z = (63−60)/1.5 = 2.000</code>; <code>p = 1−Φ(2) = 0.0228</code>; <code>z₀.₀₅=1.645</code>.</div>
+    <div class="ans"><b>Q1</b>　z=2.000 &gt; 1.645，p=.0228 &lt; .05 → <span class="rej">拒絕 H₀ / Reject H₀</span>.</div>
+  </div></details>
+</section>
+
+<!-- Q2 -->
+<section id="q2">
+  <div class="qtop"><span class="qn">Q2</span><span class="lv">★</span><span class="tp">Z · 左尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>μ₀=100, σ=20, n=50, x̄=95</code>。在 <code>α=.05</code> 左尾檢定 <code>Ha: μ&lt;100</code>。求 SE、z、p 值與判決。</div>
+    <div class="en"><code>μ₀=100, σ=20, n=50, x̄=95</code>. Test <code>Ha: μ&lt;100</code> at <code>α=.05</code> (lower tail). Find SE, z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 20/√50 = 2.8284</code>；<code>z = (95−100)/2.8284 = −1.7678</code>；<code>p = Φ(−1.7678) = 0.0386</code>；<code>−z₀.₀₅=−1.645</code>。</div>
+    <div class="en"><code>SE = 20/√50 = 2.8284</code>; <code>z = (95−100)/2.8284 = −1.7678</code>; <code>p = Φ(−1.7678) = 0.0386</code>; <code>−z₀.₀₅=−1.645</code>.</div>
+    <div class="ans"><b>Q2</b>　z=−1.768 &lt; −1.645，p=.0386 &lt; .05 → <span class="rej">拒絕 H₀ / Reject H₀</span>.</div>
+  </div></details>
+</section>
+
+<!-- Q3 -->
+<section id="q3">
+  <div class="qtop"><span class="qn">Q3</span><span class="lv">★</span><span class="tp">Z · 雙尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>μ₀=30, σ=8, n=64, x̄=32.5</code>。在 <code>α=.01</code> 雙尾檢定。求 z、p 值與判決。</div>
+    <div class="en"><code>μ₀=30, σ=8, n=64, x̄=32.5</code>. Two-tailed test at <code>α=.01</code>. Find z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 8/√64 = 1</code>；<code>z = 2.5</code>；<code>p = 2×P(Z&gt;2.5) = 0.0124</code>；<code>z₀.₀₀₅ = 2.576</code>。</div>
+    <div class="en"><code>SE = 8/√64 = 1</code>; <code>z = 2.5</code>; <code>p = 2×P(Z&gt;2.5) = 0.0124</code>; <code>z₀.₀₀₅ = 2.576</code>.</div>
+    <div class="ans"><b>Q3</b>　|z|=2.5 &lt; 2.576，p=.0124 &gt; .01 → <span class="norej">不拒絕 / Do not reject</span>. （同一個 z 在 α=.05 會拒絕）</div>
+  </div></details>
+</section>
+
+<!-- Q4 -->
+<section id="q4">
+  <div class="qtop"><span class="qn">Q4</span><span class="lv">★</span><span class="tp">臨界值翻譯</span></div>
+  <div class="qtext">
+    <div class="zh"><code>μ₀=60, σ=9, n=36</code>，右尾 <code>α=.01</code>。求 x̄ 尺度上的臨界值 c。</div>
+    <div class="en"><code>μ₀=60, σ=9, n=36</code>, upper tail at <code>α=.01</code>. Find the critical value c on the x̄ scale.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 1.5</code>；<code>z₀.₀₁ = 2.3263</code>；<code>c = 60 + 2.3263×1.5 = 63.4895</code>。</div>
+    <div class="en"><code>SE = 1.5</code>; <code>z₀.₀₁ = 2.3263</code>; <code>c = 60 + 2.3263×1.5 = 63.4895</code>.</div>
+    <div class="ans"><b>Q4</b>　c = <b>63.4895</b>；決策規則：x̄ &gt; 63.49 就拒絕。</div>
+  </div></details>
+</section>
+
+<!-- Q5 -->
+<section id="q5">
+  <div class="qtop"><span class="qn">Q5</span><span class="lv">★</span><span class="tp">反查 z</span></div>
+  <div class="qtext">
+    <div class="zh">不看表，寫出 <code>α = .10 / .05 / .01</code> 的雙尾 <code>z<sub>α/2</sub></code>、右尾 <code>z<sub>α</sub></code>、左尾 <code>−z<sub>α</sub></code>。</div>
+    <div class="en">From memory, give the two-tailed <code>z<sub>α/2</sub></code>, upper <code>z<sub>α</sub></code> and lower <code>−z<sub>α</sub></code> for <code>α = .10 / .05 / .01</code>.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>α=.10</code>：1.645 / 1.282 / −1.282<br><code>α=.05</code>：1.960 / 1.645 / −1.645<br><code>α=.01</code>：2.576 / 2.326 / −2.326</div>
+    <div class="en"><code>α=.10</code>: 1.645 / 1.282 / −1.282<br><code>α=.05</code>: 1.960 / 1.645 / −1.645<br><code>α=.01</code>: 2.576 / 2.326 / −2.326</div>
+    <div class="ans"><b>Q5</b>　這是 §19 要求默寫的九個數字，考試不給表。</div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q6 -->
+<section id="q6">
+  <div class="qtop"><span class="qn">Q6</span><span class="lv">★★</span><span class="tp">t · 右尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>σ</code> 未知：<code>n=16, x̄=52, s=8, μ₀=48</code>。在 <code>α=.05</code> 右尾檢定。求 t、p 值與判決。</div>
+    <div class="en">σ unknown: <code>n=16, x̄=52, s=8, μ₀=48</code>. Upper-tailed test at <code>α=.05</code>. Find t, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 8/√16 = 2</code>；<code>t = (52−48)/2 = 2.000</code>，<code>df=15</code>；<code>p = P(t₁₅&gt;2) = 0.0320</code>；<code>t₀.₀₅,₁₅=1.753</code>。</div>
+    <div class="en"><code>SE = 8/√16 = 2</code>; <code>t = (52−48)/2 = 2.000</code>, <code>df=15</code>; <code>p = P(t₁₅&gt;2) = 0.0320</code>; <code>t₀.₀₅,₁₅=1.753</code>.</div>
+    <div class="ans"><b>Q6</b>　t=2.000 &gt; 1.753 → <span class="rej">拒絕 / Reject</span>. 若誤用 Z，p 會是 0.0228（低估）。</div>
+  </div></details>
+</section>
+
+<!-- Q7 -->
+<section id="q7">
+  <div class="qtop"><span class="qn">Q7</span><span class="lv">★★</span><span class="tp">t · 雙尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>n=25, x̄=18.4, s=3, μ₀=20</code>，<code>α=.05</code> 雙尾。求 t、p 值與判決。</div>
+    <div class="en"><code>n=25, x̄=18.4, s=3, μ₀=20</code>, two-tailed at <code>α=.05</code>. Find t, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 3/√25 = 0.6</code>；<code>t = (18.4−20)/0.6 = −2.6667</code>，<code>df=24</code>；<code>p = 2×P(t₂₄&lt;−2.6667) = 0.0135</code>；<code>t₀.₀₂₅,₂₄=2.064</code>。</div>
+    <div class="en"><code>SE = 3/√25 = 0.6</code>; <code>t = (18.4−20)/0.6 = −2.6667</code>, <code>df=24</code>; <code>p = 2×P(t₂₄&lt;−2.6667) = 0.0135</code>; <code>t₀.₀₂₅,₂₄=2.064</code>.</div>
+    <div class="ans"><b>Q7</b>　|t|=2.667 &gt; 2.064 → <span class="rej">拒絕 / Reject</span>.</div>
+  </div></details>
+</section>
+
+<!-- Q8 -->
+<section id="q8">
+  <div class="qtop"><span class="qn">Q8</span><span class="lv">★★</span><span class="tp">t 信賴區間</span></div>
+  <div class="qtext">
+    <div class="zh"><code>n=16, x̄=52, s=8</code>，σ 未知。求 μ 的 95% 信賴區間。</div>
+    <div class="en"><code>n=16, x̄=52, s=8</code>, σ unknown. Compute the 95% confidence interval for μ.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = 2</code>；<code>t₀.₀₂₅,₁₅ = 2.1314</code>；<code>52 ± 2.1314×2 = 52 ± 4.2629</code>。</div>
+    <div class="en"><code>SE = 2</code>; <code>t₀.₀₂₅,₁₅ = 2.1314</code>; <code>52 ± 2.1314×2 = 52 ± 4.2629</code>.</div>
+    <div class="ans"><b>Q8</b>　95% CI = <b>[47.7371, 56.2629]</b>。用 1.96 會得到錯誤的較窄區間。</div>
+  </div></details>
+</section>
+
+<!-- Q9 -->
+<section id="q9">
+  <div class="qtop"><span class="qn">Q9</span><span class="lv">★★</span><span class="tp">χ² · 右尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>σ₀=6, n=16, s=8.4</code>，右尾 <code>α=.05</code>。求 U、臨界值、p 值與判決。</div>
+    <div class="en"><code>σ₀=6, n=16, s=8.4</code>, upper tail at <code>α=.05</code>. Find U, the critical value, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>U = 15×8.4²/6² = 29.400</code>，<code>df=15</code>；<code>χ²₀.₀₅,₁₅=24.9958</code>；<code>p = P(χ²₁₅&gt;29.4) = 0.0143</code>。</div>
+    <div class="en"><code>U = 15×8.4²/6² = 29.400</code>, <code>df=15</code>; <code>χ²₀.₀₅,₁₅=24.9958</code>; <code>p = P(χ²₁₅&gt;29.4) = 0.0143</code>.</div>
+    <div class="ans"><b>Q9</b>　29.40 &gt; 24.996 → <span class="rej">拒絕 / Reject</span>，變異數顯著變大。</div>
+  </div></details>
+</section>
+
+<!-- Q10 -->
+<section id="q10">
+  <div class="qtop"><span class="qn">Q10</span><span class="lv">★★</span><span class="tp">χ² · 雙尾</span></div>
+  <div class="qtext">
+    <div class="zh"><code>σ₀=8, n=21, s=11.5</code>，雙尾 <code>α=.05</code>。求 U、兩界與判決。</div>
+    <div class="en"><code>σ₀=8, n=21, s=11.5</code>, two-tailed at <code>α=.05</code>. Find U, both bounds and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>U = 20×11.5²/8² = 41.3281</code>，<code>df=20</code>；下界 <code>9.5908</code>、上界 <code>34.1696</code>；<code>p ≈ 0.0068</code>。</div>
+    <div class="en"><code>U = 20×11.5²/8² = 41.3281</code>, <code>df=20</code>; lower <code>9.5908</code>, upper <code>34.1696</code>; <code>p ≈ 0.0068</code>.</div>
+    <div class="ans"><b>Q10</b>　41.33 &gt; 34.17 → <span class="rej">拒絕 / Reject</span>。兩界距 df=20 分別 10.41 與 14.17，<b>不對稱</b>。</div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q11 -->
+<section id="q11">
+  <div class="qtop"><span class="qn">Q11</span><span class="lv">★★★</span><span class="tp">β 與 power</span></div>
+  <div class="qtext">
+    <div class="zh"><code>μ₀=100, σ=10, n=25, α=.05</code> 右尾。若 <code>μₐ=105</code>，求 c、β、power。</div>
+    <div class="en"><code>μ₀=100, σ=10, n=25, α=.05</code>, upper tail. If <code>μₐ=105</code>, find c, β and power.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE=2</code>；<code>c = 100 + 1.6449×2 = 103.2897</code>；<code>z<sub>β</sub> = (103.2897−105)/2 = −0.8551</code>；<code>β = Φ(−0.8551) = 0.1962</code>。</div>
+    <div class="en"><code>SE=2</code>; <code>c = 100 + 1.6449×2 = 103.2897</code>; <code>z<sub>β</sub> = (103.2897−105)/2 = −0.8551</code>; <code>β = Φ(−0.8551) = 0.1962</code>.</div>
+    <div class="ans"><b>Q11</b>　β = <b>0.1962</b>，power = <b>0.8038</b>.</div>
+  </div></details>
+</section>
+
+<!-- Q12 -->
+<section id="q12">
+  <div class="qtop"><span class="qn">Q12</span><span class="lv">★★★</span><span class="tp">樣本數</span></div>
+  <div class="qtext">
+    <div class="zh">承 Q11，想把 power 提高到 <code>.90</code>，<code>δ=5, σ=10, α=.05</code> 右尾。求 n。</div>
+    <div class="en">Continue Q11: raise power to <code>.90</code> with <code>δ=5, σ=10, α=.05</code> (upper tail). Find n.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>n = ((1.6449+1.2816)×10/5)² = 34.2554</code>。</div>
+    <div class="en"><code>n = ((1.6449+1.2816)×10/5)² = 34.2554</code>.</div>
+    <div class="ans"><b>Q12</b>　n = <b>35</b>（無條件進位，34 的 power 不到 .90）。</div>
+  </div></details>
+</section>
+
+<!-- Q13 -->
+<section id="q13">
+  <div class="qtop"><span class="qn">Q13</span><span class="lv">★★★</span><span class="tp">樣本數 α=.01</span></div>
+  <div class="qtext">
+    <div class="zh">同 Q12，但 <code>α=.01</code>（右尾），power 仍要 <code>.90</code>。求 n，並說出比 Q12 多幾人。</div>
+    <div class="en">Same as Q12 but with <code>α=.01</code> (upper tail) and power still <code>.90</code>. Find n and the increase over Q12.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>z₀.₀₁=2.3263</code>；<code>n = ((2.3263+1.2816)×10/5)² = 52.0678</code>。</div>
+    <div class="en"><code>z₀.₀₁=2.3263</code>; <code>n = ((2.3263+1.2816)×10/5)² = 52.0678</code>.</div>
+    <div class="ans"><b>Q13</b>　n = <b>53</b>，比 Q12 多 18 人。這就是收緊 α 的實際成本。</div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q14 -->
+<section id="q14">
+  <div class="qtop"><span class="qn">Q14</span><span class="lv">★★★</span><span class="tp">兩母體均值</span></div>
+  <div class="qtext">
+    <div class="zh"><code>n₁=50, x̄₁=120, σ₁=15</code>；<code>n₂=60, x̄₂=114, σ₂=12</code>；<code>D₀=0</code>，雙尾 <code>α=.05</code>。求 SE、Z、p 與判決。</div>
+    <div class="en"><code>n₁=50, x̄₁=120, σ₁=15</code>; <code>n₂=60, x̄₂=114, σ₂=12</code>; <code>D₀=0</code>, two-tailed at <code>α=.05</code>. Find SE, Z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE = √(225/50 + 144/60) = √(4.5+2.4) = √6.9 = 2.6268</code>；<code>Z = 6/2.6268 = 2.2842</code>；<code>p = 0.0224</code>。</div>
+    <div class="en"><code>SE = √(225/50 + 144/60) = √(4.5+2.4) = √6.9 = 2.6268</code>; <code>Z = 6/2.6268 = 2.2842</code>; <code>p = 0.0224</code>.</div>
+    <div class="ans"><b>Q14</b>　|Z|=2.284 &gt; 1.960 → <span class="rej">拒絕 / Reject</span>. 注意是變異數相加，<b>不是</b> 15/√50 + 12/√60.</div>
+  </div></details>
+</section>
+
+<!-- Q15 -->
+<section id="q15">
+  <div class="qtop"><span class="qn">Q15</span><span class="lv">★★★</span><span class="tp">兩比例 · 檢定</span></div>
+  <div class="qtext">
+    <div class="zh"><code>x₁=30/150, x₂=28/200</code>，雙尾 <code>α=.05</code>。求 p̂_pool、SE、z、p 與判決。</div>
+    <div class="en"><code>x₁=30/150, x₂=28/200</code>, two-tailed at <code>α=.05</code>. Find p̂_pool, SE, z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>p̂₁=.20, p̂₂=.14</code>；<code>p̂_pool = 58/350 = 0.1657</code>；<code>SE = √(0.1657×0.8343×(1/150+1/200)) = 0.04016</code>；<code>z = 0.06/0.04016 = 1.4940</code>；<code>p = 0.1352</code>。</div>
+    <div class="en"><code>p̂₁=.20, p̂₂=.14</code>; <code>p̂_pool = 58/350 = 0.1657</code>; <code>SE = √(0.1657×0.8343×(1/150+1/200)) = 0.04016</code>; <code>z = 0.06/0.04016 = 1.4940</code>; <code>p = 0.1352</code>.</div>
+    <div class="ans"><b>Q15</b>　|z|=1.494 &lt; 1.960 → <span class="norej">不拒絕 / Do not reject</span>.</div>
+  </div></details>
+</section>
+
+<!-- Q16 -->
+<section id="q16">
+  <div class="qtop"><span class="qn">Q16</span><span class="lv">★★★</span><span class="tp">兩比例 · CI</span></div>
+  <div class="qtext">
+    <div class="zh">承 Q15，求 <code>p₁−p₂</code> 的 95% 信賴區間（<b>不 pool</b>）。</div>
+    <div class="en">Continue Q15: compute the 95% confidence interval for <code>p₁−p₂</code> (<b>unpooled</b>).</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>SE_unpooled = √(0.2×0.8/150 + 0.14×0.86/200) = 0.04085</code>；<code>0.06 ± 1.960×0.04085 = 0.06 ± 0.08006</code>。</div>
+    <div class="en"><code>SE_unpooled = √(0.2×0.8/150 + 0.14×0.86/200) = 0.04085</code>; <code>0.06 ± 1.960×0.04085 = 0.06 ± 0.08006</code>.</div>
+    <div class="ans"><b>Q16</b>　95% CI = <b>[−0.0201, 0.1401]</b>，含 0 → 與 Q15 不拒絕一致。</div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- Q17 -->
+<section id="q17">
+  <div class="qtop"><span class="qn">Q17</span><span class="lv">★★</span><span class="tp">二項精確</span></div>
+  <div class="qtext">
+    <div class="zh"><code>X~Binomial(20, 0.10)</code>。求 <code>P(X≥5)</code> 與 <code>P(X≥6)</code>。</div>
+    <div class="en"><code>X~Binomial(20, 0.10)</code>. Find <code>P(X≥5)</code> and <code>P(X≥6)</code>.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>P(X≥5) = 1 − Σ(k=0..4) C(20,k)(.1)^k(.9)^(20−k) = 0.0432</code><br><code>P(X≥6) = 0.0113</code>。</div>
+    <div class="en"><code>P(X≥5) = 1 − Σ(k=0..4) C(20,k)(.1)^k(.9)^(20−k) = 0.0432</code><br><code>P(X≥6) = 0.0113</code>.</div>
+    <div class="ans"><b>Q17</b>　0.0432 與 0.0113。若 <code>α=.05</code> 且觀察到 5 個，拒絕 H₀；觀察 6 個更強。</div>
+  </div></details>
+</section>
+
+<!-- Q18 -->
+<section id="q18">
+  <div class="qtop"><span class="qn">Q18</span><span class="lv">★★</span><span class="tp">單一比例 Z</span></div>
+  <div class="qtext">
+    <div class="zh"><code>p₀=0.30, n=100, x=38, α=.05</code> 雙尾。求 p̂、SE、z、p 與判決。</div>
+    <div class="en"><code>p₀=0.30, n=100, x=38, α=.05</code>, two-tailed. Find p̂, SE, z, p and the decision.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>p̂ = 0.38</code>；<code>SE = √(0.3×0.7/100) = 0.04583</code>；<code>z = (0.38−0.30)/0.04583 = 1.7457</code>；<code>p = 2×P(Z&gt;1.7457) = 0.0809</code>。</div>
+    <div class="en"><code>p̂ = 0.38</code>; <code>SE = √(0.3×0.7/100) = 0.04583</code>; <code>z = (0.38−0.30)/0.04583 = 1.7457</code>; <code>p = 2×P(Z&gt;1.7457) = 0.0809</code>.</div>
+    <div class="ans"><b>Q18</b>　|z|=1.746 &lt; 1.960 → <span class="norej">不拒絕 / Do not reject</span>. 單一比例用 p₀ 算 SE，<b>不用 p̂</b>。</div>
+  </div></details>
+</section>
+
+<!-- Q19 -->
+<section id="q19">
+  <div class="qtop"><span class="qn">Q19</span><span class="lv">★★★★</span><span class="tp">A/B 樣本數</span></div>
+  <div class="qtext">
+    <div class="zh"><code>p₁=.10 → p₂=.12</code>，雙尾 <code>α=.05</code>、power <code>.80</code>。求每組人數 n。</div>
+    <div class="en"><code>p₁=.10 → p₂=.12</code>, two-tailed <code>α=.05</code>, power <code>.80</code>. Find the per-group sample size n.</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh"><code>p̄=0.11</code>；<code>z₀.₀₂₅=1.9600</code>，<code>z₀.₂₀=0.8416</code><br><code>n = [1.9600√(2×.11×.89) + 0.8416√(.09+.1056)]² / .02² = 3840.85</code>。</div>
+    <div class="en"><code>p̄=0.11</code>; <code>z₀.₀₂₅=1.9600</code>, <code>z₀.₂₀=0.8416</code><br><code>n = [1.9600√(2×.11×.89) + 0.8416√(.09+.1056)]² / .02² = 3840.85</code>.</div>
+    <div class="ans"><b>Q19</b>　n = <b>3841 人/組</b>。</div>
+  </div></details>
+</section>
+
+<!-- Q20 -->
+<section id="q20">
+  <div class="qtop"><span class="qn">Q20</span><span class="lv">★★★★</span><span class="tp">混合大題</span></div>
+  <div class="qtext">
+    <div class="zh"><code>σ</code> 未知，<code>n=36, x̄=98, s=12, μ₀=95, α=.05</code> 右尾，真實 <code>μₐ=98</code>。求 (a) t、p、判決；(b) 95% 雙側 CI；(c) 對 μₐ=98 的 β 與 power（SE 用 12/√36）。</div>
+    <div class="en">σ unknown, <code>n=36, x̄=98, s=12, μ₀=95, α=.05</code> upper tail, true <code>μₐ=98</code>. Find (a) t, p, decision; (b) two-sided 95% CI; (c) β and power against μₐ=98 (use SE = 12/√36).</div>
+  </div>
+  <details class="sol"><summary>顯示詳解 / Show solution</summary><div class="solbody">
+    <div class="zh">(a) <code>SE=2</code>，<code>t=(98−95)/2=1.500</code>，<code>df=35</code>，<code>p=P(t₃₅&gt;1.5)=0.0713</code>，<code>t₀.₀₅,₃₅=1.6896</code> → 不拒絕。<br>(b) <code>t₀.₀₂₅,₃₅=2.0301</code>，<code>98±2.0301×2 = [93.9398, 102.0602]</code>。<br>(c) <code>c=95+1.6449×2=98.2897</code>；<code>z<sub>β</sub>=(98.2897−98)/2=0.1449</code> → <code>β=Φ(0.1449)=0.5576</code>，<code>power=0.4424</code>。</div>
+    <div class="en">(a) <code>SE=2</code>, <code>t=(98−95)/2=1.500</code>, <code>df=35</code>, <code>p=P(t₃₅&gt;1.5)=0.0713</code>, <code>t₀.₀₅,₃₅=1.6896</code> → do not reject.<br>(b) <code>t₀.₀₂₅,₃₅=2.0301</code>, <code>98±2.0301×2 = [93.9398, 102.0602]</code>.<br>(c) <code>c=95+1.6449×2=98.2897</code>; <code>z<sub>β</sub>=(98.2897−98)/2=0.1449</code> → <code>β=Φ(0.1449)=0.5576</code>, <code>power=0.4424</code>.</div>
+    <div class="ans"><b>Q20</b>　(a) 不拒絕；(b) CI [93.9398, 102.0602] 含 95；(c) β=.5576、power=.4424。<b>δ 只有 3、n 只有 36，抓到的機會不到一半。</b></div>
+  </div></details>
+</section>
+
+<hr>
+
+<!-- summary -->
+<section id="summary">
+  <div class="qtop"><span class="qn">✓</span><span class="lv">答案一覽 / Answer key</span></div>
+  <div class="tw">
+  <table>
+    <thead><tr><th class="c">題</th><th>關鍵數字 / Key numbers</th><th class="c">判決 / Decision</th></tr></thead>
+    <tbody>
+      <tr><td class="c mono">Q1</td><td>SE=1.5, z=2.000, p=.0228</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q2</td><td>SE=2.8284, z=−1.7678, p=.0386</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q3</td><td>SE=1, z=2.500, p=.0124, crit 2.576</td><td class="c"><span class="norej">不拒絕</span></td></tr>
+      <tr><td class="c mono">Q4</td><td>c = 63.4895</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q5</td><td>1.645/1.282 · 1.960/1.645 · 2.576/2.326</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q6</td><td>t=2.000, df=15, p=.0320</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q7</td><td>t=−2.6667, df=24, p=.0135</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q8</td><td>95% CI [47.7371, 56.2629]</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q9</td><td>U=29.400, df=15, crit 24.9958, p=.0143</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q10</td><td>U=41.3281, 界 9.5908/34.1696, p≈.0068</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q11</td><td>c=103.2897, β=.1962, power=.8038</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q12</td><td>n=34.2554 → 35</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q13</td><td>n=52.0678 → 53（比 Q12 多 18）</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q14</td><td>SE=2.6268, Z=2.2842, p=.0224</td><td class="c"><span class="rej">拒絕</span></td></tr>
+      <tr><td class="c mono">Q15</td><td>p̂_pool=.1657, z=1.4940, p=.1352</td><td class="c"><span class="norej">不拒絕</span></td></tr>
+      <tr><td class="c mono">Q16</td><td>CI [−0.0201, 0.1401] 含 0</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q17</td><td>P(X≥5)=.0432, P(X≥6)=.0113</td><td class="c"><span class="rej">5 個以上拒絕</span></td></tr>
+      <tr><td class="c mono">Q18</td><td>p̂=.38, SE=.04583, z=1.7457, p=.0809</td><td class="c"><span class="norej">不拒絕</span></td></tr>
+      <tr><td class="c mono">Q19</td><td>n=3840.85 → 3841/組</td><td class="c">—</td></tr>
+      <tr><td class="c mono">Q20</td><td>t=1.500, p=.0713; CI [93.94,102.06]; β=.5576</td><td class="c"><span class="norej">不拒絕</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip">
+    <span class="h">四行作答法 / The four-line habit</span>
+    <div class="zh"><b>SE → 統計量 → 臨界值或 p → 判決</b>。這四行寫熟了，任何檢定都只是換公式。前三冊：第一冊練理解、第二冊練覆蓋、這一冊練速度。</div>
+    <div class="en"><b>SE → statistic → critical value or p → decision</b>. Once these four lines are automatic, every test is just a formula swap. Three sets: Set 1 for understanding, Set 2 for coverage, this one for speed.</div>
+  </div>
+  <div class="note" style="margin-top:22px">
+    <span class="h">回到其他頁面 / Navigation</span>
+    <a href="index.html">雙語講義 / Notes</a>　·　<a href="exercises.html">第一冊 / Set 1</a>　·　<a href="exercises-2.html">第二冊 / Set 2</a>
+  </div>
+</section>
+
+</main>
+</div>
+
+<button class="menubtn" id="menubtn">☰</button>
+
+<script>
+document.querySelectorAll('.toggle button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.toggle button').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');
+    document.body.className='lang-'+b.dataset.lang;
+  });
+});
+document.getElementById('expandAll').addEventListener('click',function(){
+  document.querySelectorAll('details.sol').forEach(function(d){d.open=true});
+});
+document.getElementById('collapseAll').addEventListener('click',function(){
+  document.querySelectorAll('details.sol').forEach(function(d){d.open=false});
+});
+document.getElementById('menubtn').addEventListener('click',function(){
+  document.getElementById('sb').classList.toggle('open');
+});
+document.querySelectorAll('#toc a').forEach(function(a){
+  a.addEventListener('click',function(){document.getElementById('sb').classList.remove('open')});
+});
+var links=[].slice.call(document.querySelectorAll('#toc a'));
+var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+function upd(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  document.getElementById('pfill').style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+  var y=h.scrollTop+140, act=0;
+  for(var i=0;i<secs.length;i++){
+    if(secs[i].getBoundingClientRect().top+h.scrollTop<=y) act=i;
+  }
+  links.forEach(function(a,i){a.classList.toggle('active',i===act)});
+}
+window.addEventListener('scroll',upd,{passive:true});
+window.addEventListener('resize',upd);
+upd();
+</script>
+</body>
+</html>
